@@ -5,10 +5,6 @@
     flex-direction: column;
 }
 
-.inactiveTab, .activeTab {
-    list-style-type: none;
-}
-
 .tabs {
     display: flex;
     justify-content: space-between;

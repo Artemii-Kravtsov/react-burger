@@ -6,16 +6,17 @@ import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burg
 class BurgerContent extends React.Component {
 
     render = () => {return (
-        <section className={`${style.contentContainer} scrollable pr-4`}>
+        <ul className={`${style.contentContainer} scrollable pr-4`}>
             {this.props.data.map((elem) => {
-                return (<div className={style.anElement}>
+                return (<li key={elem['_id']}
+                            className={style.anElement}>
                             <DragIcon type="primary" />
                             <ConstructorElement text={elem["name"]} price={elem["price"]} thumbnail={elem["image"]} extraClass={this.props.extraClass}/>
-                        </div>
+                        </li>
                         )
             })
             }
-        </section>
+        </ul>
     )
     }
 }
