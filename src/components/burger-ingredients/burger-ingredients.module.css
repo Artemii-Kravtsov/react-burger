@@ -21,7 +21,10 @@
 }
 
 .activeTab {
-    composes: inactiveTab;
+    flex-grow: 1;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    cursor: pointer;
     box-shadow: inset 0px -2px 0px var(--active_color);
 }
 

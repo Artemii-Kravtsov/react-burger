@@ -21,7 +21,7 @@ const AppHeader = ({ selectedScreen, onHeaderItemClick }) => {
         <Logo/>
       </span>
 
-      <article className='userProfile'>
+      <article className='userProfile mr-4'>
         <HeaderItem Icon={ProfileIcon} title={'Личный кабинет'} onClick={() => {}} currentSelection={''} />
       </article>
 
