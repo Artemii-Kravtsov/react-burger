@@ -7,7 +7,7 @@ class Ingredient extends React.Component {
 
     state = {count: 0}
 
-    render = () => {return (
+    render = () => (
         <article className={style.ingredientContainer}>
             {this.state.count === 0 ? null : <Counter count={this.state.count} size="default" extraClass="" />}
             <img src={this.props.data["image"]} alt={this.props.data["name"]} className={"ml-4 mr-4"} />
@@ -18,7 +18,6 @@ class Ingredient extends React.Component {
             <p className={`${style.ingredient_name} text text_type_main-default`}>{this.props.data["name"]}</p>
         </article>
     )
-    }
 }
 
 export default Ingredient;

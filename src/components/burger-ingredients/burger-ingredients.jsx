@@ -11,29 +11,29 @@ class BurgerIngredients extends React.Component {
     constructor(props) {
       super(props);
       this.state = {selectedTab: 'Булки'}
-      this.user_is_scrolling = false
-      this.data_filtered = {'Булки': data.filter((x) => x.type === 'bun'), 
+      this.userIsScrolling = false
+      this.dataFiltered = {'Булки': data.filter((x) => x.type === 'bun'), 
                             'Соусы': data.filter((x) => x.type === 'sauce'),
                             'Начинки': data.filter((x) => x.type === 'main')}
-      this.data_ids = {'Булки': 'bun', 'Соусы': 'sauce', 'Начинки': 'main'}
-      this.tabs_visibility = [false, false, false]
+      this.dataIds = {'Булки': 'bun', 'Соусы': 'sauce', 'Начинки': 'main'}
+      this.tabsVisibility = [false, false, false]
     }
 
 
     onTabNameClick = (x) => {
-      this.user_is_scrolling = true
-      document.getElementById(this.data_ids[x] + '_header').scrollIntoView()
+      this.userIsScrolling = true
+      document.getElementById(this.dataIds[x] + '_header').scrollIntoView()
       this.setState({...this.state, selectedTab: x})
-      setTimeout(() => this.user_is_scrolling = false, 50)
+      setTimeout(() => this.userIsScrolling = false, 50)
       // без таймаута IntersectionObserver среагирует на уехавшие заголовки
     }
 
     onTabScrolled = (entries) => {
       entries.forEach(entry => {
-        this.tabs_visibility[Object.keys(this.data_ids).indexOf(entry.target.dataset.id)] = entry.isIntersecting
+        this.tabsVisibility[Object.keys(this.dataIds).indexOf(entry.target.dataset.id)] = entry.isIntersecting
       })
-      const newSelectedTab = Object.keys(this.data_ids)[this.tabs_visibility.indexOf(true)]
-      if (newSelectedTab !== this.state.selectedTab && !this.user_is_scrolling) {
+      const newSelectedTab = Object.keys(this.dataIds)[this.tabsVisibility.indexOf(true)]
+      if (newSelectedTab !== this.state.selectedTab && !this.userIsScrolling) {
         this.setState({...this.state, selectedTab: newSelectedTab})
       }
     }
@@ -43,36 +43,36 @@ class BurgerIngredients extends React.Component {
         root: document.querySelector(".ingredients_area"), rootMargin: "0px", threshold: 0.0001,
       };
       this.observer = new IntersectionObserver(this.onTabScrolled, options);
-      for (let x of Object.values(this.data_ids)) {
+      for (let x of Object.values(this.dataIds)) {
         this.observer.observe(document.getElementById(x + '_data'));
       }
     }
 
     componentWillUnmount = () => {
-      for (let x of Object.values(this.data_ids)) {
+      for (let x of Object.values(this.dataIds)) {
         this.observer.unobserve(document.getElementById(x + '_data'));
       }
     }
 
     render = () => {
-      let tab_class
+      let tabClass
 
       return (
 
-        <section className={`${style.ingredients_area} ingredients_area`}>
+        <section className={`${style.ingredientsArea} ingredients_area`}>
           <h2 className={'text text_type_main-large mt-10'}>Соберите бургер</h2>
 
           <nav className={'mt-5'}>
             <ul className={style.tabs}>
-              {Object.keys(this.data_filtered).map((x, idx) => {
-                tab_class = this.state.selectedTab === x ? style.activeTab : `${style.inactiveTab} text_color_inactive`
-                return <li key={idx} onClick={this.onTabNameClick.bind(this, x)} className={"text text_type_main-default " + tab_class }>{x}</li>
+              {Object.keys(this.dataFiltered).map((x, idx) => {
+                tabClass = this.state.selectedTab === x ? style.activeTab : `${style.inactiveTab} text_color_inactive`
+                return <li key={idx} onClick={this.onTabNameClick.bind(this, x)} className={"text text_type_main-default " + tabClass }>{x}</li>
               })}
             </ul>
           </nav>
           
           <section className={`${style.ingredients} mt-10 scrollable`}>
-            {Object.keys(this.data_filtered).map((x, idx) => <GroupOfIngredients key={idx} title={x} data={this.data_filtered[x]} tabId={this.data_ids[x]} />)}
+            {Object.keys(this.dataFiltered).map((x, idx) => <GroupOfIngredients key={idx} title={x} data={this.dataFiltered[x]} tabId={this.dataIds[x]} />)}
           </section>
 
         </section>

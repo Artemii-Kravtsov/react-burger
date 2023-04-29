@@ -1,7 +1,8 @@
 import React from 'react';
-import style from './App.module.css';
+import style from './app.module.css';
 import AppHeader from '../app-header/app-header.jsx';
 import BurgerScreen from '../burger-screen/burger-screen.jsx'
+
 
 class App extends React.Component {
 
@@ -11,12 +12,10 @@ class App extends React.Component {
     this.setState({...this.state, selectedScreen: x})
   }
 
-
   render = () => {return (
     <>
       <AppHeader onHeaderItemClick={this.onHeaderItemClick} selectedScreen={this.state.selectedScreen} />
-      {this.state.selectedScreen === 'Конструктор' ? <BurgerScreen container_css={style.main}/> : null}
-      <footer className={style.footer}></footer>
+      {this.state.selectedScreen === 'Конструктор' ? <BurgerScreen containerCss={style.main}/> : null}
     </>
   )
   }

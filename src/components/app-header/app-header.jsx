@@ -1,23 +1,20 @@
-import React from 'react';
 import style from './app-header.module.css';
 import HeaderItem from '../header-item/header-item.jsx';
 import { Logo, ListIcon, BurgerIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 
-class AppHeader extends React.Component {
+const AppHeader = ({ selectedScreen, onHeaderItemClick }) => {
 
-  state = {selectedScreen: 'Конструктор'}
-
-  onButtonClick = (x) => {
-    this.props.onHeaderItemClick(x)
+  const onButtonClick = (x) => {
+    onHeaderItemClick(x)
   }
 
-  render = () => {return (
+  return (
     <header className={style.header}>
 
       <nav className='selectScreen'>
-        <HeaderItem Icon={BurgerIcon} title={'Конструктор'} onClick={this.onButtonClick.bind(this, 'Конструктор')} currentSelection={this.props.selectedScreen} />
-        <HeaderItem Icon={ListIcon} title={'Лента заказов'} onClick={this.onButtonClick.bind(this, 'Лента заказов')} currentSelection={this.props.selectedScreen} />
+        <HeaderItem Icon={BurgerIcon} title={'Конструктор'} onClick={onButtonClick.bind(this, 'Конструктор')} currentSelection={selectedScreen} />
+        <HeaderItem Icon={ListIcon} title={'Лента заказов'} onClick={onButtonClick.bind(this, 'Лента заказов')} currentSelection={selectedScreen} />
       </nav>
 
       <span className={`${style.logoContainer} pb-4  pt-4`}>
@@ -30,7 +27,6 @@ class AppHeader extends React.Component {
 
     </header>
   )
-  }
 }
 
 export default AppHeader;
