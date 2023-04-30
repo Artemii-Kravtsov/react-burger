@@ -1,0 +1,33 @@
+.ingredientsArea {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.tabs {
+    display: flex;
+    justify-content: space-between;
+    padding: 0;
+    text-align: center;
+}
+
+.inactiveTab {
+    flex-grow: 1;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    cursor: pointer;
+    box-shadow: inset 0px -2px 0px var(--inactive_color);
+}
+
+.activeTab {
+    flex-grow: 1;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    cursor: pointer;
+    box-shadow: inset 0px -2px 0px var(--active_color);
+}
+
+.ingredients {
+    height: 100%;
+}

@@ -1,0 +1,21 @@
+header {
+    padding-left: calc(((100vw - var(--container_width)) / 2) - 20px);
+    padding-right: calc(((100vw - var(--container_width)) / 2) - 20px);
+    background-color: #1C1C21;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logoContainer {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+@media (max-width: 1100px) {
+    header {
+        padding-top: 60px;
+    }
+  }

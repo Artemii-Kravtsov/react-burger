@@ -1,0 +1,26 @@
+.constructor {
+    /* высота это 100% высоты родителя минус марджин (работает от класса mt-25) */
+    height: calc(100% - 100px);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    gap: 16px;
+}
+
+.constuctorElementMod {
+    /* переопределил стиль из библиотеки, т.к. мне не нужно, чтобы один ингредиент растягивался на всю высоту экрана */
+    /* хотел написать более специфичный селектор (тогда бы избавился от !important), но тогда не знаю как им воспользоваться в jsx */
+    flex-grow: 0!important;
+}
+
+.price {
+    display: flex;
+    align-items: center;
+}
+
+.price svg {
+    height: 36px;
+    width: 36px;
+}
+
