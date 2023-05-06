@@ -1,7 +1,7 @@
 import style from './order-details.module.css';
 import blopImg from '../../images/blop.png'
 import {  } from '@ya.praktikum/react-developer-burger-ui-components';
-import { dataPropTypes } from '../../utils/prop-types-templates';
+import PropTypes from 'prop-types';
 
 
 
@@ -16,6 +16,6 @@ const OrderDetails = ({ data }) => {
 }
 
 OrderDetails.propTypes = {
-    data: dataPropTypes
+    data: PropTypes.object.isRequired
 }
 export default OrderDetails;
