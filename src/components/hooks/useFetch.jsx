@@ -13,6 +13,8 @@ export function useFetch({url,
     const [data, setData] = useState(defaultData || [])
 
     const fetchFunc = () => {
+        setIsLoading(true)
+        setHasError(false)
         fetch(url)
         .then((response) => {
             if (response.ok) {

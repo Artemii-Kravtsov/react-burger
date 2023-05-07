@@ -35,12 +35,12 @@ const App = () => {
           {selectedScreen === 'Конструктор' && <BurgerScreen data={data}
                                                              openOrderModal={openOrderModal}
                                                              openIngredientsModal={openIngredientsModal} />}
-          {isOrderModalOpen && <Modal header='' closeModalFunc={closeOrderModal}>
+          {isOrderModalOpen && <Modal closeModalFunc={closeOrderModal}>
                                    <OrderDetails data={dataForOrderModal}/>
                                </Modal>}
           {isIngredientsModalOpen && <Modal header='Детали ингредиента' closeModalFunc={closeIngredientModal}>
                                          <IngredientDetails data={dataForIngredientModal}/>
-                                     </Modal>}                           
+                                     </Modal>}
           </>
           )}
     </>

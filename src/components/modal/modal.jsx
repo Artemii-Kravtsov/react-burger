@@ -10,7 +10,7 @@ const ModalOverlay = ({ closeFunc }) => {
 }
 
 
-const Modal = ({ header, closeModalFunc, children }) => {
+const Modal = ({ header='', closeModalFunc, children }) => {
 
     const handleKeyPress = useCallback((event) => {
         if(event.key === 'Escape'){
