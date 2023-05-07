@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react';
 import style from './ingredient.module.css';
-import { openIngredientsModalContext } from '../burger-screen/burger-screen.jsx'
+import { OpenIngredientsModalContext } from '../burger-screen/burger-screen.jsx'
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ingredientPropTypes } from '../../utils/prop-types-templates';
 
@@ -8,7 +8,7 @@ import { ingredientPropTypes } from '../../utils/prop-types-templates';
 
 const Ingredient = ({ data }) => {
     const [count, setCount] = useState(0)
-    const openIngredientsModal = useContext(openIngredientsModalContext)
+    const openIngredientsModal = useContext(OpenIngredientsModalContext)
 
     return (
         <article className={style.ingredientContainer} onClick={() => openIngredientsModal(data)}>

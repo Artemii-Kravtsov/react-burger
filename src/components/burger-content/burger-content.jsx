@@ -10,7 +10,7 @@ const BurgerContent = ({ extraClass, data }) => (
         {data.length === 0 ? null : data.map((elem) => (
             <li key={elem['_id']} className={style.anElement}>
                 <DragIcon type="primary" />
-                <ConstructorElement text={elem["name"]} price={elem["price"]} thumbnail={elem["image"]} extraClass={extraClass}/>
+                <ConstructorElement text={elem.name} price={elem.price} thumbnail={elem.image} extraClass={extraClass}/>
             </li>
         ))}
     </ul>

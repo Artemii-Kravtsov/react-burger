@@ -7,24 +7,25 @@ import PropTypes from 'prop-types';
 import { dataPropTypes } from '../../utils/prop-types-templates';
 
 
+export const DataContext = createContext();
+export const OpenOrderModalContext = createContext();
+export const OpenIngredientsModalContext = createContext();
 
-export const openOrderModalContext = createContext();
-export const openIngredientsModalContext = createContext();
-
-const BurgerScreen = ({ containerCss, data, openOrderModal, openIngredientsModal }) => (
-    <main className={`${containerCss} ${style.main}`}>
-      <openOrderModalContext.Provider value={openOrderModal}>
-        <openIngredientsModalContext.Provider value={openIngredientsModal}>
-          <BurgerIngredients data={data} />
-          <BurgerConstructor data={data} />
-        </openIngredientsModalContext.Provider>
-      </openOrderModalContext.Provider>
+const BurgerScreen = ({ data, openOrderModal, openIngredientsModal }) => (
+    <main className={style.main}>
+      <DataContext.Provider value={data}>
+        <OpenOrderModalContext.Provider value={openOrderModal}>
+          <OpenIngredientsModalContext.Provider value={openIngredientsModal}>
+            <BurgerIngredients />
+            <BurgerConstructor />
+          </OpenIngredientsModalContext.Provider>
+        </OpenOrderModalContext.Provider>
+      </DataContext.Provider>
     </main>  
 )
 
 BurgerScreen.propTypes = {
   data: dataPropTypes,
-  containerCss: PropTypes.string.isRequired,
   openOrderModal: PropTypes.func.isRequired,
   openIngredientsModal: PropTypes.func.isRequired
 }

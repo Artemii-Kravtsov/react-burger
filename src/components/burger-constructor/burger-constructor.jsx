@@ -3,27 +3,27 @@ import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-co
 import PairOfBuns from '../pair-of-buns/pair-of-buns.jsx'
 import BurgerContent from '../burger-content/burger-content.jsx'
 import { useState, useEffect, useContext, useCallback } from 'react';
-import { openOrderModalContext } from '../burger-screen/burger-screen.jsx'
-import { dataPropTypes } from '../../utils/prop-types-templates';
+import { OpenOrderModalContext, DataContext } from '../burger-screen/burger-screen.jsx'
 
 
 
  
-const BurgerConstructor = ({ data }) => {
+const BurgerConstructor = () => {
 
     const [buns, setBuns] = useState([])
     const [content, setContent] = useState([])
     const [totalPrice, setTotalPrice] = useState(0)
-    const openOrderModal = useContext(openOrderModalContext)
+    const data = useContext(DataContext)
+    const openOrderModal = useContext(OpenOrderModalContext)
 
     useEffect(() => {
-        setBuns(data.find(x => x['name'] === "Краторная булка N-200i"))
-        setContent(data.filter(x => x['type'] !== "bun").slice(0, 6))
+        setBuns(data.find(x => x.name === "Краторная булка N-200i"))
+        setContent(data.filter(x => x.type !== "bun").slice(0, 6))
     }, [])
 
     useEffect(() => {
-        const bunsPrice = (buns && buns['price']) || 0
-        const contentPrice = (content && content.reduce((partialSum, a) => partialSum + a['price'], 0)) || 0
+        const bunsPrice = (buns && buns.price) || 0
+        const contentPrice = (content && content.reduce((partialSum, a) => partialSum + a.price, 0)) || 0
         setTotalPrice(bunsPrice + contentPrice)
     }, [buns['_id'], content.join])
 
@@ -50,9 +50,5 @@ const BurgerConstructor = ({ data }) => {
         </section>
     )
 }
-
-BurgerConstructor.propTypes = {
-    data: dataPropTypes
-  }
 
 export default BurgerConstructor;

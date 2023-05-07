@@ -1,7 +1,8 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useContext } from 'react';
 import style from './burger-ingredients.module.css';
 import {  } from '@ya.praktikum/react-developer-burger-ui-components';
-import { dataPropTypes } from '../../utils/prop-types-templates';
+import { DataContext } from '../burger-screen/burger-screen.jsx'
+
 
 
 import GroupOfIngredients from '../group-of-ingredients/group-of-ingredients.jsx'
@@ -9,13 +10,15 @@ import GroupOfIngredients from '../group-of-ingredients/group-of-ingredients.jsx
 
 
 
-const BurgerIngredients = ({ data }) => {
+const BurgerIngredients = () => {
+  
   const [selectedTab, setSelectedTab] = useState()
   const [userIsJumping, setUserIsJumping] = useState(false)
   const [dataFiltered, setDataFiltered] = useState({'Булки': [], 'Соусы': [], 'Начинки': []})
   const [tabsVisibility, setTabsVisibility] = useState([false, false, false])
   const [dataIds] = useState({'Булки': 'bun', 'Соусы': 'sauce', 'Начинки': 'main'})
   const ingredientsArea = useRef()
+  const data = useContext(DataContext)
 
   useEffect(() => {
     setDataFiltered({
@@ -89,7 +92,4 @@ const BurgerIngredients = ({ data }) => {
 }
 
 
-BurgerIngredients.propTypes = {
-  data: dataPropTypes
-}
 export default BurgerIngredients;

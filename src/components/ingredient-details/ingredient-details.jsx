@@ -14,13 +14,13 @@ const CharsItem = ({ title, value }) => {
 
 const IngredientDetails = ({ data }) => {
     return (<>
-            <img src={data["image_large"]} alt={data["name"]} />
-            <h3 className='text text_type_main-medium mt-4'>{data["name"]}</h3>
+            <img src={data.image_large} alt={data.name} />
+            <h3 className='text text_type_main-medium mt-4'>{data.name}</h3>
             <ul className={style.chars + " mt-8"}>
-               <CharsItem title="Калории,ккал" value={data["calories"]} />
-               <CharsItem title="Белки,г" value={data["proteins"]} />
-               <CharsItem title="Жиры,г" value={data["fat"]} />
-               <CharsItem title="Углеводы,г" value={data["carbohydrates"]} />
+               <CharsItem title="Калории,ккал" value={data.calories} />
+               <CharsItem title="Белки,г" value={data.proteins} />
+               <CharsItem title="Жиры,г" value={data.fat} />
+               <CharsItem title="Углеводы,г" value={data.carbohydrates} />
             </ul>
             </>)
 }
