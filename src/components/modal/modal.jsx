@@ -16,7 +16,7 @@ const Modal = ({ header='', closeModalFunc, children }) => {
         if(event.key === 'Escape'){
             closeModalFunc()
         }
-    }, [])
+    }, [closeModalFunc])
 
 
     useEffect(() => {
@@ -45,8 +45,6 @@ ModalOverlay.propTypes = {
     closeFunc: PropTypes.func.isRequired
 }
 Modal.propTypes = {
-    header: PropTypes.string.isRequired,
-    closeFunc: PropTypes.func.isRequired,
     children: PropTypes.element
 }
 const modalRoot = document.getElementById("react-modals");

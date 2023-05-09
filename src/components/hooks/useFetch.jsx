@@ -51,7 +51,6 @@ export function useFetch({url,
             if (typeof onError === 'function') {
                 onError(error)
             }
-            return Promise.reject(error)
         });
     }
 
