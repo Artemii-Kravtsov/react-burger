@@ -45,7 +45,9 @@ ModalOverlay.propTypes = {
     closeFunc: PropTypes.func.isRequired
 }
 Modal.propTypes = {
-    children: PropTypes.element
-}
+    children: PropTypes.element,
+    header: PropTypes.string,
+    closeModalFunc: PropTypes.func.isRequired,
+};
 const modalRoot = document.getElementById("react-modals");
 export default Modal;
