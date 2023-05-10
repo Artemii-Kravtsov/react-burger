@@ -1,83 +1,95 @@
-import React from 'react';
+import { useState, useEffect, useRef, useContext } from 'react';
 import style from './burger-ingredients.module.css';
 import {  } from '@ya.praktikum/react-developer-burger-ui-components';
+import { DataContext } from '../burger-screen/burger-screen.jsx'
 
-import data from '../../utils/data.js'
+
+
 import GroupOfIngredients from '../group-of-ingredients/group-of-ingredients.jsx'
 
 
 
-class BurgerIngredients extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state = {selectedTab: 'Булки'}
-      this.userIsScrolling = false
-      this.dataFiltered = {'Булки': data.filter((x) => x.type === 'bun'), 
-                            'Соусы': data.filter((x) => x.type === 'sauce'),
-                            'Начинки': data.filter((x) => x.type === 'main')}
-      this.dataIds = {'Булки': 'bun', 'Соусы': 'sauce', 'Начинки': 'main'}
-      this.tabsVisibility = [false, false, false]
+
+const BurgerIngredients = () => {
+  
+  const [selectedTab, setSelectedTab] = useState()
+  const [userIsJumping, setUserIsJumping] = useState(false)
+  const [dataFiltered, setDataFiltered] = useState({'Булки': [], 'Соусы': [], 'Начинки': []})
+  const [tabsVisibility, setTabsVisibility] = useState([false, false, false])
+  const [dataIds] = useState({'Булки': 'bun', 'Соусы': 'sauce', 'Начинки': 'main'})
+  const ingredientsArea = useRef()
+  const data = useContext(DataContext)
+
+  useEffect(() => {
+    setDataFiltered({
+      'Булки': data.filter((x) => x.type === 'bun'), 
+      'Соусы': data.filter((x) => x.type === 'sauce'),
+      'Начинки': data.filter((x) => x.type === 'main')
+    })
+  }, [data.join()])
+
+  const onTabNameClick = (x) => {
+    setUserIsJumping(true)
+    document.getElementById(dataIds[x] + '_header').scrollIntoView()
+    setSelectedTab(x)
+    setTimeout(() => setUserIsJumping(false), 100)
+    // без таймаута IntersectionObserver среагирует на уехавшие заголовки
+  }
+
+  const onTabScrolled = (entries) => {
+    entries.forEach(entry => {
+      tabsVisibility[Object.keys(dataIds).indexOf(entry.target.dataset.id)] = entry.isIntersecting
+    })
+    setTabsVisibility(tabsVisibility)
+    const newSelectedTab = Object.keys(dataIds)[tabsVisibility.indexOf(true)]
+    if (newSelectedTab !== selectedTab && !userIsJumping) {
+      setSelectedTab(newSelectedTab)
     }
+  }
 
-
-    onTabNameClick = (x) => {
-      this.userIsScrolling = true
-      document.getElementById(this.dataIds[x] + '_header').scrollIntoView()
-      this.setState({...this.state, selectedTab: x})
-      setTimeout(() => this.userIsScrolling = false, 50)
-      // без таймаута IntersectionObserver среагирует на уехавшие заголовки
+  useEffect(() => {
+    const options = {root: ingredientsArea.current,
+                     rootMargin: "0px", 
+                     threshold: 0.001}
+    const observer = new IntersectionObserver(onTabScrolled, options)
+    for (let x of Object.values(dataIds)) {
+      const header = document.getElementById(x + '_data')
+      header && observer.observe(header)
     }
-
-    onTabScrolled = (entries) => {
-      entries.forEach(entry => {
-        this.tabsVisibility[Object.keys(this.dataIds).indexOf(entry.target.dataset.id)] = entry.isIntersecting
-      })
-      const newSelectedTab = Object.keys(this.dataIds)[this.tabsVisibility.indexOf(true)]
-      if (newSelectedTab !== this.state.selectedTab && !this.userIsScrolling) {
-        this.setState({...this.state, selectedTab: newSelectedTab})
+    return () => {
+      for (let x of Object.values(dataIds)) {
+        const header = document.getElementById(x + '_data')
+        header && observer.unobserve(header)
       }
     }
+  }, [])
 
-    componentDidMount = () => {
-      let options = {
-        root: document.querySelector(".ingredients_area"), rootMargin: "0px", threshold: 0.0001,
-      };
-      this.observer = new IntersectionObserver(this.onTabScrolled, options);
-      for (let x of Object.values(this.dataIds)) {
-        this.observer.observe(document.getElementById(x + '_data'));
-      }
-    }
+  let tabClass
+  return (
+    <section ref={ingredientsArea} className={`${style.ingredientsArea} ingredients_area`}>
+      <h2 className={'text text_type_main-large mt-10'}>Соберите бургер</h2>
 
-    componentWillUnmount = () => {
-      for (let x of Object.values(this.dataIds)) {
-        this.observer.unobserve(document.getElementById(x + '_data'));
-      }
-    }
+      <nav className={'mt-5'}>
+        <ul className={style.tabs}>
+          {Object.keys(dataIds).map((x, idx) => {
+            tabClass = selectedTab === x ? style.activeTab : `${style.inactiveTab} text_color_inactive`
+            return <li key={idx} 
+                       onClick={onTabNameClick.bind(this, x)} 
+                       className={"text text_type_main-default " + tabClass}>{x}</li>
+          })}
+        </ul>
+      </nav>
+      
+      <section className={`${style.ingredients} mt-10 scrollable`}>
+        {Object.keys(dataIds).map((x, idx) => <GroupOfIngredients key={idx} 
+                                                                  title={x} 
+                                                                  data={dataFiltered[x]} 
+                                                                  tabId={dataIds[x]} />)}
+      </section>
+    </section>
+  )
 
-    render = () => {
-      let tabClass
-
-      return (
-
-        <section className={`${style.ingredientsArea} ingredients_area`}>
-          <h2 className={'text text_type_main-large mt-10'}>Соберите бургер</h2>
-
-          <nav className={'mt-5'}>
-            <ul className={style.tabs}>
-              {Object.keys(this.dataFiltered).map((x, idx) => {
-                tabClass = this.state.selectedTab === x ? style.activeTab : `${style.inactiveTab} text_color_inactive`
-                return <li key={idx} onClick={this.onTabNameClick.bind(this, x)} className={"text text_type_main-default " + tabClass }>{x}</li>
-              })}
-            </ul>
-          </nav>
-          
-          <section className={`${style.ingredients} mt-10 scrollable`}>
-            {Object.keys(this.dataFiltered).map((x, idx) => <GroupOfIngredients key={idx} title={x} data={this.dataFiltered[x]} tabId={this.dataIds[x]} />)}
-          </section>
-
-        </section>
-    )
-    }
 }
+
 
 export default BurgerIngredients;

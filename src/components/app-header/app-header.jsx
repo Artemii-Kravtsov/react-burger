@@ -1,20 +1,17 @@
 import style from './app-header.module.css';
 import HeaderItem from '../header-item/header-item.jsx';
 import { Logo, ListIcon, BurgerIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import PropTypes from 'prop-types';
 
 
 const AppHeader = ({ selectedScreen, onHeaderItemClick }) => {
-
-  const onButtonClick = (x) => {
-    onHeaderItemClick(x)
-  }
 
   return (
     <header className={style.header}>
 
       <nav className='selectScreen'>
-        <HeaderItem Icon={BurgerIcon} title={'Конструктор'} onClick={onButtonClick.bind(this, 'Конструктор')} currentSelection={selectedScreen} />
-        <HeaderItem Icon={ListIcon} title={'Лента заказов'} onClick={onButtonClick.bind(this, 'Лента заказов')} currentSelection={selectedScreen} />
+        <HeaderItem Icon={BurgerIcon} title={'Конструктор'} onClick={onHeaderItemClick.bind(this, 'Конструктор')} currentSelection={selectedScreen} />
+        <HeaderItem Icon={ListIcon} title={'Лента заказов'} onClick={onHeaderItemClick.bind(this, 'Лента заказов')} currentSelection={selectedScreen} />
       </nav>
 
       <span className={`${style.logoContainer} pb-4  pt-4`}>
@@ -27,6 +24,11 @@ const AppHeader = ({ selectedScreen, onHeaderItemClick }) => {
 
     </header>
   )
+}
+
+AppHeader.propTypes = {
+  selectedScreen: PropTypes.string.isRequired,
+  onHeaderItemClick: PropTypes.func.isRequired
 }
 
 export default AppHeader;

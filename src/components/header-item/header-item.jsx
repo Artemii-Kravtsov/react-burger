@@ -1,4 +1,5 @@
 import style from './header-item.module.css';
+import PropTypes from 'prop-types';
 
 
 const HeaderItem = ({Icon, onClick, title, currentSelection}) => (
@@ -8,4 +9,10 @@ const HeaderItem = ({Icon, onClick, title, currentSelection}) => (
   </div>
 );
 
+HeaderItem.propTypes = {
+  Icon: PropTypes.oneOfType([PropTypes.element, PropTypes.func]).isRequired,
+  onClick: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
+  currentSelection: PropTypes.string.isRequired
+}
 export default HeaderItem;

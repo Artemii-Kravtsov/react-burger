@@ -1,5 +1,7 @@
 import style from './group-of-ingredients.module.css';
 import Ingredient from '../ingredient/ingredient.jsx'
+import PropTypes from 'prop-types';
+import { dataPropTypes } from '../../utils/prop-types-templates';
 
 
 
@@ -12,4 +14,9 @@ const GroupOfIngredients = ({ title, data, tabId }) => (
   </>
 );
 
+GroupOfIngredients.propTypes = {
+  data: dataPropTypes,
+  title: PropTypes.string.isRequired,
+  tabId: PropTypes.string.isRequired
+} 
 export default GroupOfIngredients;
