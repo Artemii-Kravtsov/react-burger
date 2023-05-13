@@ -6,13 +6,11 @@ import IngredientDetails from '../ingredient-details/ingredient-details.jsx';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import OrderDetails from '../order-details/order-details.jsx';
-import { useModal } from '../hooks/useModal.jsx';
-import { useFetch } from '../hooks/useFetch.jsx';
+import { useModal } from '../../hooks/useModal.jsx';
+import { useFetch } from '../../hooks/useFetch.jsx';
 import { DataContext, OpenOrderModalContext, OpenIngredientsModalContext, CustomBurgerContext } from '../../context/context.js';
+import { BASE_URL } from '../../context/constants.js'
 
-
-
-const GET_INGREDIENTS_ENDPOINT_URL = 'https://norma.nomoreparties.space/api/ingredients'
 
 
 function addTotalPrice(customBurgerObj, action) {
@@ -60,7 +58,7 @@ const App = () => {
                                                                      filling: undefined,
                                                                      orderNumber: undefined,
                                                                      price: 0})
-  const {data, isLoading, hasError, fetchFunc} = useFetch({url: GET_INGREDIENTS_ENDPOINT_URL,
+  const {data, isLoading, hasError, fetchFunc} = useFetch({url: BASE_URL + 'ingredients',
                                                            validationFunc: (data) => data['success'] === true, 
                                                            transformFunc: (data) => data['data'], 
                                                            onSuccess: setWasFetched.bind(this, true)})

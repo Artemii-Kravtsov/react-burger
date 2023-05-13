@@ -3,19 +3,18 @@ import style from './order-details.module.css';
 import blopImg from '../../images/blop.png'
 import {  } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
-import { useFetch } from '../hooks/useFetch.jsx';
+import { useFetch } from '../../hooks/useFetch.jsx';
 import { CustomBurgerContext } from '../../context/context.js';
 import { ingredientPropTypes, dataPropTypes } from '../../utils/prop-types-templates';
+import { BASE_URL } from '../../context/constants.js'
 
 
-
-const PLACE_AN_ORDER_ENDPOINT_URL = 'https://norma.nomoreparties.space/api/orders'
 
 const OrderDetails = ({ buns, filling, price }) => {
     const [wasFetched, setWasFetched] = useState(false)
     const {setCustomBurger} = useContext(CustomBurgerContext)
     const {data, isLoading, hasError, fetchFunc} = useFetch({
-        url: PLACE_AN_ORDER_ENDPOINT_URL,
+        url: BASE_URL + 'orders',
         method: 'post',
         payload: {"ingredients": [buns._id, ...filling.map((x) => x._id)]},
         validationFunc: (data) => data['success'] === true, 
