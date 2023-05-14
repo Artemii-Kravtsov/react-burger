@@ -1,9 +1,8 @@
 import { useState, useContext } from 'react';
 import style from './ingredient.module.css';
-import { OpenIngredientsModalContext } from '../burger-screen/burger-screen.jsx'
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ingredientPropTypes } from '../../utils/prop-types-templates';
-
+import { OpenIngredientsModalContext } from '../../context/context.js';
 
 
 const Ingredient = ({ data }) => {

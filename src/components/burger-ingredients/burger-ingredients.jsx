@@ -1,9 +1,7 @@
 import { useState, useEffect, useRef, useContext } from 'react';
 import style from './burger-ingredients.module.css';
 import {  } from '@ya.praktikum/react-developer-burger-ui-components';
-import { DataContext } from '../burger-screen/burger-screen.jsx'
-
-
+import { DataContext } from '../../context/context.js';
 
 import GroupOfIngredients from '../group-of-ingredients/group-of-ingredients.jsx'
 
