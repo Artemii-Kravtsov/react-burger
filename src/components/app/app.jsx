@@ -77,7 +77,7 @@ const App = () => {
     const buns = (data || []).filter(x => x.type === "bun")
     const selectedBun = buns[Math.floor(Math.random() * buns.length)]
     const selectedFilling = shuffleArray((data || []).filter(x => x.type !== "bun")).slice(0, 4)
-    setCustomBurger({'data': { 'buns': selectedBun, 'filling': selectedFilling || undefined }})
+    setCustomBurger({'data': { 'buns': selectedBun, 'filling': selectedFilling }})
   }, [data])
 
   const [ isOrderModalOpen, openOrderModal, closeOrderModal, dataForOrderModal ] = useModal();

@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, useMemo, useCallback } from 'react';
 import style from './order-details.module.css';
 import blopImg from '../../images/blop.png'
 import {  } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -11,8 +11,9 @@ import { BASE_URL } from '../../context/constants.js'
 
 
 const OrderDetails = ({ buns, filling, price }) => {
-    const [wasFetched, setWasFetched] = useState(false)
     const {setCustomBurger} = useContext(CustomBurgerContext)
+    const [wasFetched, setWasFetched] = useState(false)
+
     const {data, isLoading, hasError, fetchFunc} = useFetch({
         url: BASE_URL + 'orders',
         method: 'post',
@@ -21,7 +22,7 @@ const OrderDetails = ({ buns, filling, price }) => {
         transformFunc: (data) => data['order']['number'], 
         onSuccess: setWasFetched.bind(this, true)
     })
-    useEffect(fetchFunc, [])
+    useEffect(() => {console.log('fetch'); fetchFunc()}, [])
     useEffect(() => {wasFetched && data && setCustomBurger({'type': 'ordered', 'data': data})}, [wasFetched, data])
 
     return (
