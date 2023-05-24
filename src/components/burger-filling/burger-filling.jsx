@@ -4,11 +4,13 @@ import PropTypes from 'prop-types';
 import { dataPropTypes } from '../../utils/prop-types-templates';
 
 
+const IngredientPlaceholder = () => <div className={`constructor-element ${style.placeholder}`}></div>
 
 const BurgerFilling = ({ extraClass, filling, setCustomBurger }) => {
     const deleteIngredient = (ingredient) => setCustomBurger({'type': 'pop', 'data': ingredient})
 
     return (<ul className={`${style.fillingContainer} scrollable pr-4`}>
+                <IngredientPlaceholder />
                 {filling.length === 0 ? null : filling.map((elem) => (
                     <li key={elem['_id']} className={style.anElement}>
                         <DragIcon type="primary" />

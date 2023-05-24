@@ -5,6 +5,7 @@ import { ingredientPropTypes } from '../../utils/prop-types-templates';
 import { OpenIngredientsModalContext } from '../../context/context.js';
 
 
+
 const Ingredient = ({ data }) => {
     const [count, setCount] = useState(0)
     const openIngredientsModal = useContext(OpenIngredientsModalContext)

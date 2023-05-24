@@ -2,18 +2,24 @@
     max-height: calc((80px * 5) + (16px * 4));
     display: flex;
     flex-direction: column;
-    align-items: stretch;
     gap: 16px;
     overflow-y: overlay!important;
+    align-self: stretch;
 }
 
 .anElement {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-end;
     gap: 8px;
 }
 
 .anElement > svg {
     cursor: pointer;
+}
+
+.placeholder {
+    background-color: inherit;
+    border: 2px dashed var(--background-element);
+    align-self: flex-end;
 }

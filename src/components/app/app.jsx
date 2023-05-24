@@ -11,6 +11,9 @@ import { useFetch } from '../../hooks/useFetch.jsx';
 import { DataContext, OpenOrderModalContext, OpenIngredientsModalContext, CustomBurgerContext } from '../../context/context.js';
 import { BASE_URL } from '../../context/constants.js'
 
+import { useDispatch } from 'react-redux';
+import { addBrowsedIngredient, removeBrowsedIngredient } from '../../services/actions/browsed-ingredient';
+
 
 
 function addTotalPrice(customBurgerObj, action) {
@@ -52,6 +55,7 @@ function addTotalPrice(customBurgerObj, action) {
 
 const App = () => {
 
+  const dispatch = useDispatch()
   const [selectedScreen, setSelectedScreen] = useState('Конструктор')
   const [wasFetched, setWasFetched] = useState(false)
   const [customBurger, setCustomBurger] = useReducer(addTotalPrice, {buns: undefined, 
@@ -76,12 +80,14 @@ const App = () => {
     }
     const buns = (data || []).filter(x => x.type === "bun")
     const selectedBun = buns[Math.floor(Math.random() * buns.length)]
-    const selectedFilling = shuffleArray((data || []).filter(x => x.type !== "bun")).slice(0, 4)
+    const selectedFilling = shuffleArray((data || []).filter(x => x.type !== "bun")).slice(0, 7)
     setCustomBurger({'data': { 'buns': selectedBun, 'filling': selectedFilling }})
   }, [data])
 
   const [ isOrderModalOpen, openOrderModal, closeOrderModal, dataForOrderModal ] = useModal();
-  const [ isIngredientsModalOpen, openIngredientsModal, closeIngredientModal, dataForIngredientModal ] = useModal();
+  const [ isIngredientsModalOpen, openIngredientsModal, 
+          closeIngredientModal, dataForIngredientModal ] = useModal((data)=>dispatch(addBrowsedIngredient(data)), 
+                                                                    ()=>dispatch(removeBrowsedIngredient()));
 
 
   return (
@@ -108,7 +114,7 @@ const App = () => {
                                              <OrderDetails {...dataForOrderModal}/>
                                          </Modal>}
                     {isIngredientsModalOpen && <Modal header='Детали ингредиента' closeModalFunc={closeIngredientModal}>
-                                                   <IngredientDetails data={dataForIngredientModal}/>
+                                                   <IngredientDetails />
                                                </Modal>}
                                                
               </CustomBurgerContext.Provider>

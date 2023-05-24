@@ -2,6 +2,7 @@ import style from './ingredient-details.module.css';
 import {  } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 import { ingredientPropTypes } from '../../utils/prop-types-templates';
+import { useSelector } from 'react-redux';
 
 
 
@@ -12,15 +13,17 @@ const CharsItem = ({ title, value }) => {
             </li>)
 }
 
-const IngredientDetails = ({ data }) => {
+const IngredientDetails = () => {
+    const browsedIngredient = useSelector((store) => store.browsedIngredient)
+
     return (<>
-            <img src={data.image_large} alt={data.name} />
-            <h3 className='text text_type_main-medium mt-4'>{data.name}</h3>
+            <img src={browsedIngredient.image_large} alt={browsedIngredient.name} />
+            <h3 className='text text_type_main-medium mt-4'>{browsedIngredient.name}</h3>
             <ul className={style.chars + " mt-8"}>
-               <CharsItem title="Калории,ккал" value={data.calories} />
-               <CharsItem title="Белки,г" value={data.proteins} />
-               <CharsItem title="Жиры,г" value={data.fat} />
-               <CharsItem title="Углеводы,г" value={data.carbohydrates} />
+               <CharsItem title="Калории,ккал" value={browsedIngredient.calories} />
+               <CharsItem title="Белки,г" value={browsedIngredient.proteins} />
+               <CharsItem title="Жиры,г" value={browsedIngredient.fat} />
+               <CharsItem title="Углеводы,г" value={browsedIngredient.carbohydrates} />
             </ul>
             </>)
 }
@@ -28,8 +31,5 @@ const IngredientDetails = ({ data }) => {
 CharsItem.propTypes = {
     title: PropTypes.string.isRequired,
     value: PropTypes.number.isRequired,
-}
-IngredientDetails.propTypes = {
-    data: ingredientPropTypes.isRequired
 }
 export default IngredientDetails;
