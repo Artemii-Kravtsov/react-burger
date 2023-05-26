@@ -1,7 +1,6 @@
 import style from './pair-of-buns.module.css';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
-import { ingredientPropTypes } from '../../utils/prop-types-templates';
 import { useSelector } from 'react-redux';
 
 
@@ -31,7 +30,6 @@ const PairOfBuns = ({ children, extraClass }) => {
 }
 
 PairOfBuns.propTypes = {
-    buns: PropTypes.oneOfType([PropTypes.array, ingredientPropTypes]),
     children: PropTypes.element,
     extraClass: PropTypes.string.isRequired
 }

@@ -1,18 +1,25 @@
 import browsedIngredient from './browsed-ingredient'; 
 import ingredients from './ingredients';
 import constructor from './constructor';
-import order from './order';
+import orders from './orders';
 
 
 const initialState = {
-    'order': [],                                 // объект созданного заказа
-    'ingredients': [],                           // список всех полученных ингредиентов
-    'browsedIngredient': {},                     // объект текущего просматриваемого ингредиента
-    'constructor': {'buns': {}, 'filling': []}   // список всех ингредиентов в текущем конструкторе бургера
+    'browsedIngredient': {},                        // объект текущего просматриваемого ингредиента
+    'orders': {isFetching: false, 
+               fetchingSuccess: true, 
+               orders: []},                         // объект созданного заказа
+    'ingredients': {isFetching: false, 
+                    fetchingSuccess: true, 
+                    ingredients: {'Булки': [], 
+                                  'Соусы': [], 
+                                  'Начинки': []}},  // список всех полученных ингредиентов
+    'constructor': {buns: {}, 
+                    filling: []}                    // список всех ингредиентов в текущем конструкторе бургера
 }
 
 export const rootReducer = (state=initialState, action) => ({
-    order: order(state.order, action),
+    orders: orders(state.orders, action),
     ingredients: ingredients(state.ingredients, action),
     constructor: constructor(state.constructor, action),
     browsedIngredient: browsedIngredient(state.browsedIngredient, action),

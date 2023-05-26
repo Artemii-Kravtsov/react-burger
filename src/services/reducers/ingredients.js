@@ -1,10 +1,21 @@
-import {} from '../actions/ingredients'
+import { GET_INGREDIENTS_IS_FETCHING, 
+         GET_INGREDIENTS_SUCCESS,
+         GET_INGREDIENTS_FAILURE,
+         STORE_INGREDIENTS } from '../actions/ingredients'
 
-const ingredients = (state, action) => {
-    switch (action.type) {
-        default:
-            return state
-    }
+const ingredient = (state, action) => {
+switch (action.type) {
+   case STORE_INGREDIENTS:
+       return {...state, ingredients: action.ingredients}
+   case GET_INGREDIENTS_SUCCESS:
+       return {...state, fetchingSuccess: true}
+   case GET_INGREDIENTS_FAILURE:
+       return {...state, fetchingSuccess: false}
+   case GET_INGREDIENTS_IS_FETCHING:
+       return {...state, isFetching: action.status}
+   default:
+       return state
+}
 }
 
-export default ingredients
+export default ingredient

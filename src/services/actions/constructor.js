@@ -1,5 +1,6 @@
 /*   экшены   */
 export const SWAP_WITH_BLANK = 'SWAP_WITH_BLANK';
+export const RESET_CONSTRUCTOR = 'RESET_CONSTRUCTOR';
 export const SWAP_CONSTRUCTOR_ITEMS = 'SWAP_CONSTRUCTOR_ITEMS';
 export const ADD_BUNS_TO_CONSTRUCTOR = 'ADD_BUNS_TO_CONSTRUCTOR';
 export const ADD_FILLING_TO_CONSTRUCTOR = 'ADD_FILLING_TO_CONSTRUCTOR';
@@ -29,4 +30,7 @@ export function removeBlankItemFromConstructor() {
 }
 export function swapWithBlank(item) {
   return { type: SWAP_WITH_BLANK, item };
+}
+export function resetConstructor() {
+  return { type: RESET_CONSTRUCTOR }
 }

@@ -1,6 +1,7 @@
 import {ADD_FILLING_TO_CONSTRUCTOR, 
         SWAP_CONSTRUCTOR_ITEMS, 
         SWAP_WITH_BLANK,
+        RESET_CONSTRUCTOR,  
         ADD_BUNS_TO_CONSTRUCTOR,
         REMOVE_ITEM_FROM_CONSTRUCTOR, 
         ADD_BLANK_ITEM_TO_CONSTRUCTOR,
@@ -34,18 +35,12 @@ const constructor = (state, action) => {
         case ADD_FILLING_TO_CONSTRUCTOR:
             const {item, index} = action
             filling.splice(index, 0, item)
-            return {...state, filling}      
+            return {...state, filling}
+        case RESET_CONSTRUCTOR:
+            return {'buns': {}, 'filling': []}
         default:
             return state
     }
 }
 
 export default constructor
-
-
-
-// Получение списка ингредиентов от API. Используется в компоненте BurgerIngredients.
-// Получение списка ингредиентов для конструктора бургера. Используется в компоненте BurgerConstructor.
-// Добавление данных о просматриваемом в модальном окне IngredientDetails ингредиенте.
-// Удаление данных о просматриваемом в модальном окне ингредиенте при закрытии модального окна.
-// Получение и обновление номера заказа в модальном окне OrderDetails.

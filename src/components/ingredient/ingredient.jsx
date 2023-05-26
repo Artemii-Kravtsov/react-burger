@@ -1,4 +1,4 @@
-import { useState, useContext, useCallback } from 'react';
+import { useState, useContext, useCallback, useEffect } from 'react';
 import style from './ingredient.module.css';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ingredientPropTypes } from '../../utils/prop-types-templates';
@@ -10,12 +10,19 @@ import { useStore } from 'react-redux';
 const Ingredient = ({ data }) => {
     const [count, setCount] = useState(0)
     const openIngredientsModal = useContext(OpenIngredientsModalContext)
-    const store = useStore()  // не подписка на стор, а ссылка
+    const store = useStore()
+
+    // подписан на кол-во заказов, чтобы на каждый новый - обнулять счётчик
+    // const ordersPlaced = useSelector(store => store.orders.orders.length)
+    // useEffect(() => {count !== 0 && setCount(0)}, [ordersPlaced])
 
     const decreaseCount = useCallback(() => {
-        // я не могу использовать иммутабельный count. поэтому хожу в стор (без подписки на стор)
-        if (data.type === 'bun') return setCount(0)
-        setCount(store.getState().constructor.filling.filter((x) => x._id === data._id).length -1)
+        // я не могу использовать иммутабельный count. поэтому хожу в стор (сам, без подписки)
+        if (data.type === 'bun') {
+            if (store.getState().constructor.buns._id !== data._id) setCount(0)
+        } else {
+            setCount(store.getState().constructor.filling.filter((x) => x._id === data._id).length -1)
+        }
     }, [])
 
     const [{opacity}, dragRef, dragPreview] = useDrag({

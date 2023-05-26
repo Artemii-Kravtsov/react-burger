@@ -1,4 +1,5 @@
 import style from './filling-li.module.css';
+import PropTypes from 'prop-types';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDrag, useDrop } from "react-dnd";
 import { useRef } from 'react';
@@ -7,6 +8,7 @@ import { swapConstructorItems, removeItemFromConstructor } from '../../services/
 
 
 const IngredientPlaceholder = (idx) => <div key={idx} className={`constructor-element ${style.placeholder}`}></div>
+
 const FillingLI = ({ index, name, price, image, onDrop, extraClass }) => {
     const blankItemIndex = useSelector(store => store.constructor.filling.map(x => (x['_id'] === -1)).indexOf(true))
     const dispatch = useDispatch()
@@ -43,4 +45,12 @@ const FillingLI = ({ index, name, price, image, onDrop, extraClass }) => {
             </li>)
 }
 
+FillingLI.propTypes = {
+    index: PropTypes.string.isRequired, 
+    name: PropTypes.string.isRequired,
+    price: PropTypes.string.isRequired,
+    image: PropTypes.string.isRequired, 
+    onDrop: PropTypes.func.isRequired,
+    extraClass: PropTypes.string
+}
 export {IngredientPlaceholder, FillingLI}

@@ -1,7 +1,5 @@
 import style from './ingredient-details.module.css';
-import {  } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
-import { ingredientPropTypes } from '../../utils/prop-types-templates';
 import { useSelector } from 'react-redux';
 
 
