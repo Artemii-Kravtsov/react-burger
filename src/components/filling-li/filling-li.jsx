@@ -7,10 +7,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { swapConstructorItems, removeItemFromConstructor } from '../../services/actions/constructor';
 
 
-const IngredientPlaceholder = (idx) => <div key={idx} className={`constructor-element ${style.placeholder}`}></div>
+const IngredientPlaceholder = (idx) => <div key={idx} 
+                                            className={`constructor-element ${style.placeholder}`}>
+                                       </div>
 
 const FillingLI = ({ index, name, price, image, onDrop, extraClass }) => {
-    const blankItemIndex = useSelector(store => store.constructor.filling.map(x => (x['_id'] === -1)).indexOf(true))
+    const getBlankIdx = (store) => store.constructor.filling.map(x => (x['_id'] === -1)).indexOf(true)
+    const blankItemIndex = useSelector(getBlankIdx)
     const dispatch = useDispatch()
     const [, dragRef, dragPreview] = useDrag({
         type: 'constructorItem', 
@@ -33,7 +36,9 @@ const FillingLI = ({ index, name, price, image, onDrop, extraClass }) => {
     })
 
     const dragDropRef = dragPreview(dropRef(useRef()))
-    return (<li key={index} data-id={index} className={style.anElement} ref={dragDropRef}>
+    return (<li key={index} 
+                className={style.anElement} 
+                ref={dragDropRef} >
                 <span className={style.dragWrapper} ref={dragRef} >
                     <DragIcon type="primary"/>
                 </span>

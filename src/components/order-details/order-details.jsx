@@ -9,8 +9,10 @@ import { placeAnOrder } from '../../services/actions/orders';
 const OrderDetails = () => {
     const dispatch = useDispatch()
     const [wasFetched, setWasFetched] = useState(false)
-    const hasError = useSelector(store => !store.orders.fetchingSuccess)
-    const orderId = useSelector(store => store.orders.orders.length > 0 && store.orders.orders.at(-1).orderId)
+    const getHasError = (store) => !store.orders.fetchingSuccess
+    const getOrderId = (store) => store.orders.orders.length > 0 && store.orders.orders.at(-1).orderId
+    const hasError = useSelector(getHasError)
+    const orderId = useSelector(getOrderId)
     useEffect(() => {
         dispatch(placeAnOrder({onFinish: setWasFetched.bind(this, true)}))
     }, [dispatch])

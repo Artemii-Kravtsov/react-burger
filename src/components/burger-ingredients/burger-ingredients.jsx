@@ -7,7 +7,8 @@ import GroupOfIngredients from '../group-of-ingredients/group-of-ingredients.jsx
 
 
 const BurgerIngredients = () => {
-  const data = useSelector(store => store.ingredients.ingredients)
+  const getIngredients = (store) => store.ingredients.ingredients
+  const data = useSelector(getIngredients)
   const headerNames = ['Булки', 'Соусы', 'Начинки']
   const headerRefs = [useRef(), useRef(), useRef()]
   const [selectedTab, setSelectedTab] = useState('Булки')

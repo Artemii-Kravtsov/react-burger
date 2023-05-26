@@ -5,7 +5,8 @@ import { useSelector } from 'react-redux';
 
 
 const PairOfBuns = ({ children, extraClass }) => {
-    const buns = useSelector(store => store.constructor.buns)
+    const getBuns = (store) => store.constructor.buns
+    const buns = useSelector(getBuns)
     const isEmpty = Object.keys(buns).length ? '' : style.isEmpty
     const name = buns && buns["name"]
     const price = buns && buns["price"]

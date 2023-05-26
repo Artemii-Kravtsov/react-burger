@@ -19,15 +19,22 @@ const App = () => {
   const dispatch = useDispatch()
   const [selectedScreen, setSelectedScreen] = useState('Конструктор')
   const [wasFetched, setWasFetched] = useState(false)
-  const hasError = useSelector(store => !store.ingredients.fetchingSuccess)
+  const getError = (store) => !store.ingredients.fetchingSuccess
+  const hasError = useSelector(getError)
   useEffect(() => {
     dispatch(getIngredients({onFinish: setWasFetched.bind(this, true)}))
   }, [dispatch])
 
-  const [ isOrderModalOpen, openOrderModal, closeOrderModal ] = useModal();
-  const [ isIngredientsModalOpen, openIngredientsModal, 
-          closeIngredientModal ] = useModal((data)=>dispatch(addBrowsedIngredient(data)), 
-                                            ()=>dispatch(removeBrowsedIngredient()));
+  function onIngredientsModalOpen(data) {dispatch(addBrowsedIngredient(data))}
+  function onIngredientsModalClose() {dispatch(removeBrowsedIngredient())}
+
+  const [ isOrderModalOpen, 
+          openOrderModal, 
+          closeOrderModal ] = useModal();
+  const [ isIngredientsModalOpen, 
+          openIngredientsModal, 
+          closeIngredientModal ] = useModal(onIngredientsModalOpen, 
+                                            onIngredientsModalClose);
 
   return (
     <>

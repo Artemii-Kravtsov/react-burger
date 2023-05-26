@@ -13,12 +13,14 @@ import { swapWithBlank,
 
 const BurgerConstructor = () => {
     const dispatch = useDispatch()
-    const [onBunsChange, bunsPrice] = useSelector(store => store.constructor.buns._id 
-                                            ? [store.constructor.buns.onDrop, store.constructor.buns.price * 2]
-                                            : [() => undefined, 0])
-    const fillingPrice = useSelector(store => store.constructor.filling.length > 0
-                                            ? store.constructor.filling.reduce((part, a) => part + a.price, 0)
-                                            : 0)
+    const getBuns = (store) => store.constructor.buns._id 
+                               ? [store.constructor.buns.onDrop, store.constructor.buns.price * 2]
+                               : [() => undefined, 0]
+    const getFilling = (store) => store.constructor.filling.length > 0
+                               ? store.constructor.filling.reduce((part, a) => part + a.price, 0)
+                               : 0
+    const [onBunsChange, bunsPrice] = useSelector(getBuns)
+    const fillingPrice = useSelector(getFilling)
     const openOrderModal = useContext(OpenOrderModalContext)
 
     const [{isOverBun}, dropBun] = useDrop({

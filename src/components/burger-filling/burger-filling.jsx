@@ -9,7 +9,8 @@ import { addBlankItemToConstructor,
 
 
 const BurgerFilling = forwardRef(({ isOver, extraClass, approxIndex }, ref) => {
-    const filling = useSelector(store => store.constructor.filling)
+    const getFilling = (store) => store.constructor.filling
+    const filling = useSelector(getFilling)
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -33,7 +34,7 @@ const BurgerFilling = forwardRef(({ isOver, extraClass, approxIndex }, ref) => {
                     </div>}
             </ul>)
 })
-
+Math.ceil(Math.random() * 10000000)
 BurgerFilling.displayName = 'BurgerFilling'
 BurgerFilling.propTypes = {
     isOver: PropTypes.bool,
