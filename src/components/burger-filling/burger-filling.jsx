@@ -34,7 +34,7 @@ const BurgerFilling = forwardRef(({ isOver, extraClass, approxIndex }, ref) => {
                     </div>}
             </ul>)
 })
-Math.ceil(Math.random() * 10000000)
+
 BurgerFilling.displayName = 'BurgerFilling'
 BurgerFilling.propTypes = {
     isOver: PropTypes.bool,

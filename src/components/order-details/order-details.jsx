@@ -10,7 +10,7 @@ const OrderDetails = () => {
     const dispatch = useDispatch()
     const [wasFetched, setWasFetched] = useState(false)
     const getHasError = (store) => !store.orders.fetchingSuccess
-    const getOrderId = (store) => store.orders.orders.length > 0 && store.orders.orders.at(-1).orderId
+    const getOrderId = (store) => wasFetched && store.orders.orders.length > 0 && store.orders.orders.at(-1).orderId
     const hasError = useSelector(getHasError)
     const orderId = useSelector(getOrderId)
     useEffect(() => {
