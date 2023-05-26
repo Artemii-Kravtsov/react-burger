@@ -20,11 +20,9 @@ const App = () => {
   const [selectedScreen, setSelectedScreen] = useState('Конструктор')
   const [wasFetched, setWasFetched] = useState(false)
   const hasError = useSelector(store => !store.ingredients.fetchingSuccess)
-  console.log('Рендер компонента <App>')
   useEffect(() => {
-    console.log('<App>: Стреляю запросом к API'); 
     dispatch(getIngredients({onFinish: setWasFetched.bind(this, true)}))
-  }, [])
+  }, [dispatch])
 
   const [ isOrderModalOpen, openOrderModal, closeOrderModal ] = useModal();
   const [ isIngredientsModalOpen, openIngredientsModal, 

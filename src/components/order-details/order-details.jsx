@@ -11,9 +11,7 @@ const OrderDetails = () => {
     const [wasFetched, setWasFetched] = useState(false)
     const hasError = useSelector(store => !store.orders.fetchingSuccess)
     const orderId = useSelector(store => store.orders.orders.length > 0 && store.orders.orders.at(-1).orderId)
-    console.log('Рендер компонента <OrderDetails>')
     useEffect(() => {
-        console.log('<OrderDetails>: Стреляю запросом к API '); 
         dispatch(placeAnOrder({onFinish: setWasFetched.bind(this, true)}))
     }, [dispatch])
 
