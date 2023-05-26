@@ -46,9 +46,9 @@ const FillingLI = ({ index, name, price, image, onDrop, extraClass }) => {
 }
 
 FillingLI.propTypes = {
-    index: PropTypes.string.isRequired, 
+    index: PropTypes.number.isRequired, 
     name: PropTypes.string.isRequired,
-    price: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
     image: PropTypes.string.isRequired, 
     onDrop: PropTypes.func.isRequired,
     extraClass: PropTypes.string
