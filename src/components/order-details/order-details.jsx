@@ -9,8 +9,12 @@ import { placeAnOrder } from '../../services/actions/orders';
 const OrderDetails = () => {
     const dispatch = useDispatch()
     const [wasFetched, setWasFetched] = useState(false)
+    // раньше всех спадёт wasFetched, вытащится старый getOrderId и только потом придёт обновление новым OrderId
+    // чтобы этого не было, буду ждать прихода обновления isFetching, и только потом показывать orderId - иначе будет моргать
+    const getIsFetching = (store) => store.orders.isFetching
     const getHasError = (store) => !store.orders.fetchingSuccess
-    const getOrderId = (store) => wasFetched && store.orders.orders.length > 0 && store.orders.orders.at(-1).orderId
+    const getOrderId = (store) => store.orders.orders.length > 0 && store.orders.orders.at(-1).orderId
+    const isFetching = useSelector(getIsFetching)
     const hasError = useSelector(getHasError)
     const orderId = useSelector(getOrderId)
     useEffect(() => {
@@ -19,9 +23,9 @@ const OrderDetails = () => {
 
     return (
         <>
-        {!wasFetched && (<p className="text text_type_main-large mt-15 mb-15">Формируем заказ<br/>Дождитесь ответа</p>)}
+        {(!wasFetched || isFetching) && (<p className="text text_type_main-large mt-15 mb-15">Формируем заказ<br/>Дождитесь ответа</p>)}
         {wasFetched && hasError && (<p className="text text_type_main-large mt-15 mb-15">Ошибка при формировании заказа</p>)}
-        {wasFetched && !hasError && (
+        {(wasFetched && !isFetching) && !hasError && (
             <>
             <h3 className={`${style.orderId} text text_type_digits-large mt-2`}>{orderId}</h3>
             <p className="text text_type_main-medium mt-8">идентификатор заказа</p>
