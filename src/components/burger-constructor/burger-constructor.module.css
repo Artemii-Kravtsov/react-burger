@@ -24,3 +24,7 @@
     width: 36px;
 }
 
+.isOverByBuns {
+    opacity: 0.5;
+    outline: 2px dashed white;
+}

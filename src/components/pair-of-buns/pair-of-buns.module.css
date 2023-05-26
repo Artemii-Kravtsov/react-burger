@@ -1,0 +1,13 @@
+
+.isEmpty span * {
+    display: none;
+}
+
+.isEmpty span span:first-of-type {
+    display: block
+}
+
+.isEmpty {
+    display: flex;
+    justify-content: center;
+}

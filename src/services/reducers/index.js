@@ -5,11 +5,10 @@ import order from './order';
 
 
 const initialState = {
-    'order': [],                     // объект созданного заказа
-    'ingredients': [],               // список всех полученных ингредиентов
-    'constructor': {'buns': {}, 
-                    'filling': []},  // список всех ингредиентов в текущем конструкторе бургера
-    'browsedIngredient': {},         // объект текущего просматриваемого ингредиента
+    'order': [],                                 // объект созданного заказа
+    'ingredients': [],                           // список всех полученных ингредиентов
+    'browsedIngredient': {},                     // объект текущего просматриваемого ингредиента
+    'constructor': {'buns': {}, 'filling': []}   // список всех ингредиентов в текущем конструкторе бургера
 }
 
 export const rootReducer = (state=initialState, action) => ({

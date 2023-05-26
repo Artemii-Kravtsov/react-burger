@@ -1,0 +1,20 @@
+.anElement {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    position: relative;
+    transition: transform 0.5s;
+}
+
+.dragWrapper svg {
+    cursor: move;
+}
+
+.placeholder {
+    background-color: inherit;
+    border: 2px dashed white;
+    box-sizing: border-box;
+    align-self: flex-end;
+    opacity: 0.5;
+}

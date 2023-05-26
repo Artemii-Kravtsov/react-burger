@@ -10,11 +10,14 @@ import { useModal } from '../../hooks/useModal.jsx';
 import { useFetch } from '../../hooks/useFetch.jsx';
 import { DataContext, OpenOrderModalContext, OpenIngredientsModalContext, CustomBurgerContext } from '../../context/context.js';
 import { BASE_URL } from '../../context/constants.js'
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+
 
 import { useDispatch } from 'react-redux';
 import { addBrowsedIngredient, removeBrowsedIngredient } from '../../services/actions/browsed-ingredient';
 
-
+import { swapConstructorItems, addItemToConstructor } from '../../services/actions/constructor';
 
 function addTotalPrice(customBurgerObj, action) {
   // стейт customBurger содержит не только информацию про булку и начинку, но и цену. чтобы изменить customBurger, 
@@ -80,8 +83,11 @@ const App = () => {
     }
     const buns = (data || []).filter(x => x.type === "bun")
     const selectedBun = buns[Math.floor(Math.random() * buns.length)]
-    const selectedFilling = shuffleArray((data || []).filter(x => x.type !== "bun")).slice(0, 7)
-    setCustomBurger({'data': { 'buns': selectedBun, 'filling': selectedFilling }})
+    const selectedFilling = shuffleArray((data || []).filter(x => x.type !== "bun")).slice(0, 4)
+    // dispatch(addItemToConstructor(selectedBun))
+    // for (let x of selectedFilling) {
+    //   dispatch(addItemToConstructor(x))
+    // }
   }, [data])
 
   const [ isOrderModalOpen, openOrderModal, closeOrderModal, dataForOrderModal ] = useModal();
@@ -100,27 +106,29 @@ const App = () => {
                     </div>)}
 
       {!isLoading && !hasError && wasFetched && (
-        <DataContext.Provider value={data}>
-          <OpenOrderModalContext.Provider value={openOrderModal}>
-            <OpenIngredientsModalContext.Provider value={openIngredientsModal}>
-              <CustomBurgerContext.Provider value={{customBurger, setCustomBurger}}>
+        <DndProvider backend={HTML5Backend}>
+          <DataContext.Provider value={data}>
+            <OpenOrderModalContext.Provider value={openOrderModal}>
+              <OpenIngredientsModalContext.Provider value={openIngredientsModal}>
+                <CustomBurgerContext.Provider value={{customBurger, setCustomBurger}}>
 
-                    <AppHeader onHeaderItemClick={setSelectedScreen} selectedScreen={selectedScreen} />
-                    {selectedScreen === 'Конструктор' && (<main className={style.main}>
-                                                                <BurgerIngredients />
-                                                                <BurgerConstructor />
-                                                          </main>)}
-                    {isOrderModalOpen && <Modal closeModalFunc={closeOrderModal}>
-                                             <OrderDetails {...dataForOrderModal}/>
-                                         </Modal>}
-                    {isIngredientsModalOpen && <Modal header='Детали ингредиента' closeModalFunc={closeIngredientModal}>
-                                                   <IngredientDetails />
-                                               </Modal>}
-                                               
-              </CustomBurgerContext.Provider>
-            </OpenIngredientsModalContext.Provider>
-          </OpenOrderModalContext.Provider>
-        </DataContext.Provider>)}
+                      <AppHeader onHeaderItemClick={setSelectedScreen} selectedScreen={selectedScreen} />
+                      {selectedScreen === 'Конструктор' && (<main className={style.main}>
+                                                                  <BurgerIngredients />
+                                                                  <BurgerConstructor />
+                                                            </main>)}
+                      {isOrderModalOpen && <Modal closeModalFunc={closeOrderModal}>
+                                              <OrderDetails {...dataForOrderModal}/>
+                                          </Modal>}
+                      {isIngredientsModalOpen && <Modal header='Детали ингредиента' closeModalFunc={closeIngredientModal}>
+                                                    <IngredientDetails />
+                                                </Modal>}
+                                                
+                </CustomBurgerContext.Provider>
+              </OpenIngredientsModalContext.Provider>
+            </OpenOrderModalContext.Provider>
+          </DataContext.Provider>
+        </DndProvider>)}
     </>
   )
 }

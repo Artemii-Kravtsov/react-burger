@@ -1,30 +1,52 @@
 import style from './burger-filling.module.css';
-import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
-import { dataPropTypes } from '../../utils/prop-types-templates';
+import { useDrop } from "react-dnd";
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { FillingLI, IngredientPlaceholder } from '../filling-li/filling-li';
+import { swapWithBlank,
+         addFillingToConstructor,
+         addBlankItemToConstructor, 
+         removeBlankItemFromConstructor } from '../../services/actions/constructor';
 
 
-const IngredientPlaceholder = () => <div className={`constructor-element ${style.placeholder}`}></div>
 
-const BurgerFilling = ({ extraClass, filling, setCustomBurger }) => {
-    const deleteIngredient = (ingredient) => setCustomBurger({'type': 'pop', 'data': ingredient})
+const BurgerFilling = ({ extraClass }) => {
+    const filling = useSelector(store => store.constructor.filling)
+    const dispatch = useDispatch()
+    const [{isOver}, drop] = useDrop({
+        accept: 'fillingItem',
+        drop: (item, monitor) => {
+            filling.length > 0 
+            ? dispatch(swapWithBlank(item))
+            : dispatch(addFillingToConstructor(item))
+        },
+        collect: monitor => ({
+            isOver: monitor.isOver()
+        })
+    })
 
-    return (<ul className={`${style.fillingContainer} scrollable pr-4`}>
-                <IngredientPlaceholder />
-                {filling.length === 0 ? null : filling.map((elem) => (
-                    <li key={elem['_id']} className={style.anElement}>
-                        <DragIcon type="primary" />
-                        <ConstructorElement text={elem.name} price={elem.price} thumbnail={elem.image} 
-                                            extraClass={extraClass} handleClose={deleteIngredient.bind(this, elem)}/>
-                    </li>
-                ))}
+    useEffect(() => {
+        if (isOver && filling.length > 0) {
+            dispatch(addBlankItemToConstructor())
+        } else {
+            dispatch(removeBlankItemFromConstructor())
+        }
+    }, [isOver])
+
+    return (<ul ref={drop} className={`${style.fillingContainer} scrollable pr-4`}>
+                { filling.length > 0 
+                  ? filling.map((elem, index) => (elem['_id'] === -1 
+                                                    ? <IngredientPlaceholder index={index} /> 
+                                                    : <FillingLI {...elem} extraClass={extraClass} index={index} />)) 
+                  : (<div className={style.emptyFilling + ' ' + (isOver ? style.hovered : '')}>
+                        <h3 className={'tab_name text text_type_main-default'}>Перетащите ингредиенты<br />в эту область</h3>
+                    </div>)}
             </ul>)
 }
 
 
 BurgerFilling.propTypes = {
-    filling: dataPropTypes,
-    extraClass: PropTypes.string,
-    dataPropTypes: PropTypes.func
+    extraClass: PropTypes.string
 }
 export default BurgerFilling;
