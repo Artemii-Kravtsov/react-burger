@@ -35,7 +35,7 @@ const Ingredient = ({ data }) => {
             if (item.type !== 'bun') {
                 setCount(count +1)
             } else if (count === 0) {
-                setCount(1)
+                setCount(2)
             }
         },
         collect: monitor => ({
