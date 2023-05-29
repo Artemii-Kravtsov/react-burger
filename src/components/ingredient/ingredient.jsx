@@ -29,7 +29,6 @@ const Ingredient = ({ data }) => {
         type: data.type === 'bun' ? 'bunItem' : 'fillingItem',
         item: {...data, 
                fromIngredients: true,
-               dragId: Math.floor(Math.random() * 100000),
                onDrop: decreaseCount},
         end: (item, monitor) => {
             if (!monitor.didDrop()) return

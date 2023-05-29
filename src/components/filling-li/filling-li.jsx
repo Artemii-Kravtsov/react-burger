@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { swapConstructorItems, removeItemFromConstructor } from '../../services/actions/constructor';
 
 
-const IngredientPlaceholder = (idx) => <div key={idx} 
+const IngredientPlaceholder = (idx) => <div key={Math.floor(Math.random() * 100000)} 
                                             className={`constructor-element ${style.placeholder}`}>
                                        </div>
 
@@ -36,8 +36,7 @@ const FillingLI = ({ index, name, price, image, onDrop, extraClass, dragId }) =>
     })
 
     const dragDropRef = dragPreview(dropRef(useRef()))
-    return (<li key={dragId} 
-                id={dragId}
+    return (<li key={Math.floor(Math.random() * 100000)}
                 className={style.anElement} 
                 ref={dragDropRef} >
                 <span className={style.dragWrapper} ref={dragRef} >
