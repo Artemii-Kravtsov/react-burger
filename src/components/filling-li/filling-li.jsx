@@ -11,7 +11,7 @@ const IngredientPlaceholder = (idx) => <div key={idx}
                                             className={`constructor-element ${style.placeholder}`}>
                                        </div>
 
-const FillingLI = ({ index, name, price, image, onDrop, extraClass }) => {
+const FillingLI = ({ index, name, price, image, onDrop, extraClass, dragId }) => {
     const getBlankIdx = (store) => store.constructor.filling.map(x => (x['_id'] === -1)).indexOf(true)
     const blankItemIndex = useSelector(getBlankIdx)
     const dispatch = useDispatch()
@@ -36,7 +36,8 @@ const FillingLI = ({ index, name, price, image, onDrop, extraClass }) => {
     })
 
     const dragDropRef = dragPreview(dropRef(useRef()))
-    return (<li key={index} 
+    return (<li key={dragId} 
+                id={dragId}
                 className={style.anElement} 
                 ref={dragDropRef} >
                 <span className={style.dragWrapper} ref={dragRef} >
