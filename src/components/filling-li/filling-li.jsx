@@ -11,7 +11,7 @@ const IngredientPlaceholder = (idx) => <div key={Math.floor(Math.random() * 1000
                                             className={`constructor-element ${style.placeholder}`}>
                                        </div>
 
-const FillingLI = ({ index, name, price, image, onDrop, extraClass, dragId }) => {
+const FillingLI = ({ index, name, price, image, onDrop, extraClass }) => {
     const getBlankIdx = (store) => store.constructor.filling.map(x => (x['_id'] === -1)).indexOf(true)
     const blankItemIndex = useSelector(getBlankIdx)
     const dispatch = useDispatch()
