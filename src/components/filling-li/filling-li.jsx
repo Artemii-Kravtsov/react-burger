@@ -36,7 +36,7 @@ const FillingLI = ({ index, name, price, image, onDrop, extraClass }) => {
     })
 
     const dragDropRef = dragPreview(dropRef(useRef()))
-    return (<li key={Math.floor(Math.random() * 100000)}
+    return (<li key={index} 
                 className={style.anElement} 
                 ref={dragDropRef} >
                 <span className={style.dragWrapper} ref={dragRef} >
