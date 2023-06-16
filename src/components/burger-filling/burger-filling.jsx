@@ -27,8 +27,8 @@ const BurgerFilling = forwardRef(({ isOver, extraClass, approxIndex }, ref) => {
     return (<ul ref={ref} className={`${style.fillingContainer} scrollable pr-4`}>
                 { filling.length > 0 
                   ? filling.map((elem, index) => (elem['_id'] === -1 
-                                                  ? <IngredientPlaceholder index={index} /> 
-                                                  : <FillingLI {...elem} extraClass={extraClass} index={index} />)) 
+                                                  ? <IngredientPlaceholder key={index} index={index} /> 
+                                                  : <FillingLI key={elem.id} {...elem} extraClass={extraClass} index={index} />)) 
                   : <div className={style.emptyFilling + ' ' + (isOver ? style.hovered : '')}>
                         <h3 className={'tab_name text text_type_main-default'}>Перетащите ингредиенты<br />в эту область</h3>
                     </div>}

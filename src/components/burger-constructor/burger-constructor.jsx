@@ -1,8 +1,9 @@
+import { v4 as uuidv4 } from 'uuid';
 import style from './burger-constructor.module.css';
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import PairOfBuns from '../pair-of-buns/pair-of-buns.jsx'
 import BurgerFilling from '../burger-filling/burger-filling.jsx'
-import { useContext, useRef, useMemo } from 'react';
+import { useContext, useRef } from 'react';
 import { OpenOrderModalContext } from '../../context/context.js';
 import { useDrop } from "react-dnd";
 import { useDispatch, useSelector } from 'react-redux';
@@ -27,7 +28,7 @@ const BurgerConstructor = () => {
         accept: 'bunItem',
         collect: monitor => ({isOverBun: monitor.isOver()}),
         drop: (item) => {
-            dispatch(addBunsToConstructor(item))
+            dispatch(addBunsToConstructor({...item, 'id': uuidv4()}))
             onBunsChange()
         }
     })
@@ -59,8 +60,8 @@ const BurgerConstructor = () => {
         },
         drop: (item) => {
             fillingPrice > 0   // есть ли добавленные ингредиенты, можно (пока что) понять по рассчитанной стоимости
-            ? dispatch(swapWithBlank(item))
-            : dispatch(addFillingToConstructor(item))
+            ? dispatch(swapWithBlank({...item, 'id': uuidv4()}))
+            : dispatch(addFillingToConstructor({...item, 'id': uuidv4()}))
         }
     })
 

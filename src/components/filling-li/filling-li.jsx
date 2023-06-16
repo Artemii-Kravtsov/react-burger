@@ -7,11 +7,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { swapConstructorItems, removeItemFromConstructor } from '../../services/actions/constructor';
 
 
-const IngredientPlaceholder = (idx) => <div key={Math.floor(Math.random() * 100000)} 
-                                            className={`constructor-element ${style.placeholder}`}>
+const IngredientPlaceholder = ({id}) => <div key={id} 
+                                             className={`constructor-element ${style.placeholder}`}>
                                        </div>
 
-const FillingLI = ({ index, name, price, image, onDrop, extraClass }) => {
+const FillingLI = ({ id, index, name, price, image, onDrop, extraClass }) => {
     const getBlankIdx = (store) => store.constructor.filling.map(x => (x['_id'] === -1)).indexOf(true)
     const blankItemIndex = useSelector(getBlankIdx)
     const dispatch = useDispatch()
@@ -36,7 +36,7 @@ const FillingLI = ({ index, name, price, image, onDrop, extraClass }) => {
     })
 
     const dragDropRef = dragPreview(dropRef(useRef()))
-    return (<li key={index} 
+    return (<li key={id} 
                 className={style.anElement} 
                 ref={dragDropRef} >
                 <span className={style.dragWrapper} ref={dragRef} >
