@@ -1,88 +1,56 @@
-import { useState, useEffect, useRef, useContext } from 'react';
+import { useState, useRef, useMemo } from 'react';
 import style from './burger-ingredients.module.css';
-import {  } from '@ya.praktikum/react-developer-burger-ui-components';
-import { DataContext } from '../../context/context.js';
-
+import { useSelector } from 'react-redux';
 import GroupOfIngredients from '../group-of-ingredients/group-of-ingredients.jsx'
 
 
 
 
 const BurgerIngredients = () => {
-  
-  const [selectedTab, setSelectedTab] = useState()
-  const [userIsJumping, setUserIsJumping] = useState(false)
-  const [dataFiltered, setDataFiltered] = useState({'Булки': [], 'Соусы': [], 'Начинки': []})
-  const [tabsVisibility, setTabsVisibility] = useState([false, false, false])
-  const [dataIds] = useState({'Булки': 'bun', 'Соусы': 'sauce', 'Начинки': 'main'})
-  const ingredientsArea = useRef()
-  const data = useContext(DataContext)
+  const getIngredients = (store) => store.ingredients.ingredients
+  const data = useSelector(getIngredients)
+  const headerNames = ['Булки', 'Соусы', 'Начинки']
+  const headerRefs = [useRef(), useRef(), useRef()]
+  const [selectedTab, setSelectedTab] = useState('Булки')
+  const areaStart = useRef()
+  const areaStartCoords = useMemo(() => areaStart.current && areaStart.current.getBoundingClientRect().bottom, 
+                                  [areaStart.current])
 
-  useEffect(() => {
-    setDataFiltered({
-      'Булки': data.filter((x) => x.type === 'bun'), 
-      'Соусы': data.filter((x) => x.type === 'sauce'),
-      'Начинки': data.filter((x) => x.type === 'main')
-    })
-  }, [data.join()])
-
-  const onTabNameClick = (x) => {
-    setUserIsJumping(true)
-    document.getElementById(dataIds[x] + '_header').scrollIntoView()
-    setSelectedTab(x)
-    setTimeout(() => setUserIsJumping(false), 100)
-    // без таймаута IntersectionObserver среагирует на уехавшие заголовки
-  }
-
-  const onTabScrolled = (entries) => {
-    entries.forEach(entry => {
-      tabsVisibility[Object.keys(dataIds).indexOf(entry.target.dataset.id)] = entry.isIntersecting
-    })
-    setTabsVisibility(tabsVisibility)
-    const newSelectedTab = Object.keys(dataIds)[tabsVisibility.indexOf(true)]
-    if (newSelectedTab !== selectedTab && !userIsJumping) {
+  const handleScroll = () => {
+    const dist = headerRefs.map(x => x.current.getBoundingClientRect().top - areaStartCoords).map(x => Math.abs(x))
+    const newSelectedTab = headerNames[dist.indexOf(Math.min(...dist))]
+    if (newSelectedTab !== selectedTab) {
       setSelectedTab(newSelectedTab)
     }
   }
 
-  useEffect(() => {
-    const options = {root: ingredientsArea.current,
-                     rootMargin: "0px", 
-                     threshold: 0.001}
-    const observer = new IntersectionObserver(onTabScrolled, options)
-    for (let x of Object.values(dataIds)) {
-      const header = document.getElementById(x + '_data')
-      header && observer.observe(header)
-    }
-    return () => {
-      for (let x of Object.values(dataIds)) {
-        const header = document.getElementById(x + '_data')
-        header && observer.unobserve(header)
-      }
-    }
-  }, [])
+  const onTabNameClick = (x) => {
+    headerRefs[headerNames.indexOf(x)].current.scrollIntoView()
+    setSelectedTab(x)
+  }
 
-  let tabClass
   return (
-    <section ref={ingredientsArea} className={`${style.ingredientsArea} ingredients_area`}>
+    <section className={`${style.ingredientsArea} ingredients_area`}>
       <h2 className={'text text_type_main-large mt-10'}>Соберите бургер</h2>
 
-      <nav className={'mt-5'}>
+      <nav className={'mt-5'} ref={areaStart}>
         <ul className={style.tabs}>
-          {Object.keys(dataIds).map((x, idx) => {
-            tabClass = selectedTab === x ? style.activeTab : `${style.inactiveTab} text_color_inactive`
+          {headerNames.map((x, idx) => {
             return <li key={idx} 
                        onClick={onTabNameClick.bind(this, x)} 
-                       className={"text text_type_main-default " + tabClass}>{x}</li>
+                       className={"text text_type_main-default " + 
+                                  (selectedTab === x 
+                                    ? style.activeTab 
+                                    : `${style.inactiveTab} text_color_inactive`)}>{x}</li>
           })}
         </ul>
       </nav>
       
-      <section className={`${style.ingredients} mt-10 scrollable`}>
-        {Object.keys(dataIds).map((x, idx) => <GroupOfIngredients key={idx} 
-                                                                  title={x} 
-                                                                  data={dataFiltered[x]} 
-                                                                  tabId={dataIds[x]} />)}
+      <section className={`${style.ingredients} mt-10 scrollable`} onScroll={handleScroll}>
+        {headerNames.map((x, idx) => <GroupOfIngredients key={idx} 
+                                                         title={x}
+                                                         ref={headerRefs[idx]}
+                                                         data={data[x]} />)}
       </section>
     </section>
   )
