@@ -1,0 +1,22 @@
+
+.profileContainer {
+    margin-top: 15vh;
+    display: flex;
+    gap: 60px;
+    align-items: flex-start;
+}
+
+.nav {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.link {
+    text-decoration: none;
+    flex-grow: 0;
+}
+
+.activeLink {
+    color:white;
+}
