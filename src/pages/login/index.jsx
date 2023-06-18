@@ -22,9 +22,8 @@ const LoginPage = () => {
     const clearError = () => error && setError()
     useEffect(clearError, [email, password])
 
-    function onError(promise) {
-        if (!promise.json) return
-        promise.json().then((body) => setError(body['message']))
+    function onError(body) {
+        setError(body['message'])
     }
 
     function onSuccess() {

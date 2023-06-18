@@ -21,12 +21,12 @@ const ResetPasswordPage = ({  }) => {
   const clearError = () => error && setError()
   useEffect(clearError, [code, password])
 
-  function onError(promise) {
-      if (!promise.json) return
-      promise.json().then((body) => setError(body['message']))
+  function onError(body) {
+    setError(body['message'])
   }
-
-  function reset() {
+  
+  function resetPassword(event) {
+    event.preventDefault()
     setInProcess(true)
     const promise = fetchWithRefresh(BASE_URL + 'password-reset/reset', {
         method: 'post',
@@ -44,37 +44,39 @@ const ResetPasswordPage = ({  }) => {
   return (
     <div className={style.container}>
         <h3 className={`text text_type_main-large mb-6`}>Восстановление пароля</h3>
-        <Input
-          type={'password'}
-          placeholder={'Введите новый пароль'}
-          onChange={e => setPassword(e.target.value)}
-          value={password}
-          name={'password'}
-          error={error !== undefined}
-          errorText={error}
-          extraClass="mb-6"
-          />
-        <Input
-          onChange={e => setCode(e.target.value)}
-          type={'text'}
-          placeholder={'Введите код из письма'}
-          value={code}
-          name={'code'}
-          error={error !== undefined}
-          errorText={error}
-          extraClass="mb-6"
-          />            
-        <Button 
-          htmlType="button" 
-          type="primary" 
-          size="large" 
-          extraClass={'mb-20'} 
-          width="36" 
-          height="36"
-          disabled={!(password && code)}
-          onClick={reset}>
-          {inProcess ? "Проверяем..." : "Сохранить"}
-        </Button>
+        <form onSubmit={resetPassword}
+              className={style.form} >
+          <Input
+            type={'password'}
+            placeholder={'Введите новый пароль'}
+            onChange={e => setPassword(e.target.value)}
+            value={password}
+            name={'password'}
+            error={error !== undefined}
+            errorText={error}
+            extraClass="mb-6"
+            />
+          <Input
+            onChange={e => setCode(e.target.value)}
+            type={'text'}
+            placeholder={'Введите код из письма'}
+            value={code}
+            name={'code'}
+            error={error !== undefined}
+            errorText={error}
+            extraClass="mb-6"
+            />            
+          <Button 
+            htmlType="submit" 
+            type="primary" 
+            size="large" 
+            extraClass={'mb-20'} 
+            width="36" 
+            height="36"
+            disabled={!(password && code)}>
+            {inProcess ? "Проверяем..." : "Сохранить"}
+          </Button>
+        </form>
 
         <p className={"text_color_inactive text text_type_main-small mb-4"}>
           <span>Вспомнили пароль? </span>

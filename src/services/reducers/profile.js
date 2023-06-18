@@ -7,7 +7,7 @@ const profile = (state, action) => {
         case LOGOUT:
             return {loggedIn: false, name: undefined, email: undefined}
         case SET_USER:
-            return {name: action.name, email: action.email, ...state}
+            return {...state, name: action.name, email: action.email}
         default:
             return state
     }

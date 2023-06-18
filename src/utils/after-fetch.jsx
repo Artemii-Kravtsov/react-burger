@@ -4,7 +4,7 @@ export function afterFetch(promise,
                             onFinish}={}) {
     return promise
     .then((response) => {
-        if (response.ok === false) return Promise.reject(response)
+        if (response.ok === false) return response.json().then((x) => Promise.reject(x))
         if (response.ok) return response.json()  // когда в промисе fetch, он возвращает объект Response
         return response                          // когда в промисе afterFetch, он уже возвращает json
     })

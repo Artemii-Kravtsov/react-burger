@@ -9,3 +9,8 @@
 .inactiveCancel {
     cursor: default;
 }
+
+.form {
+    display: flex;
+    flex-direction: column;
+}

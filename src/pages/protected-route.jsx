@@ -10,7 +10,6 @@ export function ProtectedRoute({ element, needAuth=true }) {
     const loggedIn = useSelector(getLoggedIn);
     const [userWillBeLoaded, setUserWillBeLoaded] = useState(true)
     const location = useLocation()
-    const loginReferer = (location.state && location.state.loginReferer) || '/'
     
   
     useEffect(() => {

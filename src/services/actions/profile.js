@@ -103,8 +103,7 @@ export function register({email,
 }
 
 
-export function getUser({onSuccess, 
-                         onError, 
+export function getUser({onSuccess,
                          onFinish} = {}) {
     return function(dispatch) {
         function onSuccessFinal(data) {
@@ -137,10 +136,9 @@ export function editUser(payload,
                 onSuccess(data)
             }
         }
-        
         const promise = fetchWithRefresh(BASE_URL + 'auth/user', {
                     method: 'PATCH',
-                    data: JSON.stringify(payload),
+                    body: JSON.stringify(payload),
                     headers: {'Accept': 'application/json', 
                               'Content-Type': 'application/json'}
         })

@@ -17,12 +17,12 @@ const ForgotPasswordPage = ({  }) => {
   const clearError = () => error && setError()
   useEffect(clearError, [email])
 
-  function onError(promise) {
-      if (!promise.json) return
-      promise.json().then((body) => setError(body['message']))
+  function onError(body) {
+    setError(body['message'])
   }
-  
-  function reset() {
+
+  function resetPassword(event) {
+    event.preventDefault()
     setInProcess(true)
     const promise = fetchWithRefresh(BASE_URL + 'password-reset', {
         method: 'post',
@@ -41,27 +41,29 @@ const ForgotPasswordPage = ({  }) => {
   return (
     <div className={style.container}>
         <h3 className={`text text_type_main-large mb-6`}>Восстановление пароля</h3>
-        <EmailInput
-            onChange={e => setEmail(e.target.value)}
-            value={email}
-            placeholder={'Укажите e-mail'}
-            name={'email'}
-            isIcon={false}
-            error={error !== undefined}
-            errorText={error}
-            extraClass="mb-6"
-            />
-        <Button 
-            htmlType="button" 
-            type="primary" 
-            size="large" 
-            extraClass={'mb-20'} 
-            width="36" 
-            height="36"
-            disabled={!email}
-            onClick={reset}>
-            {inProcess ? "Проверяем..." : "Восстановить"}
-        </Button>
+        <form onSubmit={resetPassword}
+              className={style.form} >
+          <EmailInput
+              onChange={e => setEmail(e.target.value)}
+              value={email}
+              placeholder={'Укажите e-mail'}
+              name={'email'}
+              isIcon={false}
+              error={error !== undefined}
+              errorText={error}
+              extraClass="mb-6"
+              />
+          <Button 
+              htmlType="submit" 
+              type="primary" 
+              size="large" 
+              extraClass={'mb-20'} 
+              width="36" 
+              height="36"
+              disabled={!email}>
+              {inProcess ? "Проверяем..." : "Восстановить"}
+          </Button>
+        </form>
 
         <p className={"text_color_inactive text text_type_main-small mb-4"}>
             <span>Вспомнили пароль? </span>
@@ -75,9 +77,6 @@ const ForgotPasswordPage = ({  }) => {
         </p>
     </div>
   )
-}
-
-ForgotPasswordPage.propTypes = {
 }
 
 export default ForgotPasswordPage;
