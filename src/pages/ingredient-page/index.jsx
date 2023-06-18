@@ -40,7 +40,7 @@ const IngredientPage = () => {
 
     return (<>
             {browsedIngredient && (
-                <div className={isDirect && style.ingredientContainer}>
+                <div className={isDirect ? style.ingredientContainer : ''}>
                     {isDirect && <h2 className='text text_type_main-large mb-8'>Детали ингредиента</h2>}
                     <img src={browsedIngredient.image_large} alt={browsedIngredient.name} />
                     <h3 className='text text_type_main-medium mt-4'>{browsedIngredient.name}</h3>

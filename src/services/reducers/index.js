@@ -18,8 +18,8 @@ const initialState = {
     'constructor': {buns: {}, 
                     filling: []},                   // список всех ингредиентов в текущем конструкторе бургера
     'profile': {loggedIn: false, 
-                name: 'Марк', 
-                email: 'mark@mail.ru'},                         // данные профиля пользователя
+                name: undefined, 
+                email: undefined},                  // данные профиля пользователя
 }
 
 export const rootReducer = (state=initialState, action) => ({

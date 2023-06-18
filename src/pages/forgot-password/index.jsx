@@ -1,11 +1,42 @@
 import style from './index.module.css';
 import { EmailInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-
+import { fetchWithRefresh } from '../../utils/fetch-with-refresh';
+import { afterFetch } from '../../utils/after-fetch';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { BASE_URL } from '../../services/constants';
 
 const ForgotPasswordPage = ({  }) => {
-  const [email, setEmail] = useState()
+  const navigate = useNavigate()
+  const location = useLocation()
+  const [email, setEmail] = useState('')
+  const [inProcess, setInProcess] = useState(false)
+  const [error, setError] = useState()
+
+  const clearError = () => error && setError()
+  useEffect(clearError, [email])
+
+  function onError(promise) {
+      if (!promise.json) return
+      promise.json().then((body) => setError(body['message']))
+  }
+  
+  function reset() {
+    setInProcess(true)
+    const promise = fetchWithRefresh(BASE_URL + 'password-reset', {
+        method: 'post',
+        body: JSON.stringify({email}),
+        headers: {'Accept': 'application/json', 
+                  'Content-Type': 'application/json'}
+    })
+    afterFetch(promise, 
+               {onFinish: () => setInProcess(false),
+                onError: onError, 
+                onSuccess: () => navigate('/reset-password', {reset: true, 
+                                                              state: {...location.state, 
+                                                                      'wasReset': true}})})
+  }
 
   return (
     <div className={style.container}>
@@ -16,6 +47,8 @@ const ForgotPasswordPage = ({  }) => {
             placeholder={'Укажите e-mail'}
             name={'email'}
             isIcon={false}
+            error={error !== undefined}
+            errorText={error}
             extraClass="mb-6"
             />
         <Button 
@@ -26,14 +59,16 @@ const ForgotPasswordPage = ({  }) => {
             width="36" 
             height="36"
             disabled={!email}
-            onClick={() => undefined}>
-            Восстановить
+            onClick={reset}>
+            {inProcess ? "Проверяем..." : "Восстановить"}
         </Button>
 
         <p className={"text_color_inactive text text_type_main-small mb-4"}>
             <span>Вспомнили пароль? </span>
             <Link 
                 to='/login' 
+                replace={true}
+                state={location.state}
                 className={style.link}>
                 Войти
             </Link>

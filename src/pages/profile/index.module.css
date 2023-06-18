@@ -20,3 +20,8 @@
 .activeLink {
     color:white;
 }
+
+.tabContainer {
+    display: flex;
+    flex-direction: column;
+}
