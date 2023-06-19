@@ -21,9 +21,7 @@ const ProfileTab = () => {
   const [editInProcess, setEditInProcess] = useState(false)
 
   const canEdit = (email !== newEmail) || (name !== newName) || (newPassword !== '******')
-  // console.log(email, newEmail)
-  // console.log(name, newName)
-  // console.log(newPassword, newEmail)
+
   useEffect(() => {
     if (name !== newName) setName(name)
     if (email !== newEmail) setEmail(email)
@@ -73,9 +71,11 @@ const ProfileTab = () => {
   function edit(event) {
     event.preventDefault()
     setEditInProcess(true)
-    dispatch(editUser({name: newName, 
-                       email: newEmail, 
-                       password: newPassword}, 
+    const payload = new Object()
+    if (name !== newName) payload['name'] = newName
+    if (email !== newEmail) payload['email'] = newEmail
+    if ('******' !== newPassword) payload['password'] = newPassword
+    dispatch(editUser(payload, 
                       {onSuccess: blockEdit, 
                        onFinish: () => setEditInProcess(false)}))
   }
