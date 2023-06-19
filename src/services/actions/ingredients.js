@@ -1,4 +1,4 @@
-import { BASE_URL } from "../../context/constants";
+import { BASE_URL } from "../constants";
 
 /*   экшены   */
 export const GET_INGREDIENTS_IS_FETCHING = 'GET_INGREDIENTS_IS_FETCHING';

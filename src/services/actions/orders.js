@@ -1,5 +1,5 @@
 import { resetConstructor } from "./constructor";
-import { BASE_URL } from "../../context/constants";
+import { BASE_URL } from "../constants";
 
 /*   экшены   */
 export const ORDER_IS_PLACED = 'ORDER_IS_PLACED';

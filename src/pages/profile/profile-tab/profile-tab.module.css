@@ -1,0 +1,16 @@
+.buttonArea {
+    align-self: flex-end;
+}
+
+.cancel {
+    text-decoration: none;
+}
+
+.inactiveCancel {
+    cursor: default;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+}
