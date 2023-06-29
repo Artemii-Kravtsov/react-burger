@@ -56,6 +56,7 @@ const RegisterPage: FC = () => {
             />
             <Input
                 type='email'
+                placeholder={'E-mail'}
                 onChange={e => setEmail(e.target.value)}
                 value={email}
                 name={'email'}
