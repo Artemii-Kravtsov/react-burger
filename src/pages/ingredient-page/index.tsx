@@ -7,14 +7,21 @@ import { useParams } from 'react-router-dom';
 import { TIngredient, TStore, TIngredientGroup, TBlindFunction } from '../../utils/types';
 
 
-const CharsItem: FC<{title: string, value: number}> = ({ title, value }) => (
+
+type TCharsItem = {
+    title: string;
+    value: number;
+}
+type TGetIngredient = (store: TStore) => {isDirect: boolean, browsedIngredient: TIngredient | undefined}
+
+
+
+const CharsItem: FC<TCharsItem> = ({ title, value }) => (
         <li className={style.charsItem}>
             <h4 className="text text_type_main-default text_color_inactive">{title}</h4>
             <p className="text text_type_digits-default text_color_inactive">{value}</p>
         </li>
 )
-
-type TGetIngredient = (store: TStore) => {isDirect: boolean, browsedIngredient: TIngredient | undefined}
 
 const IngredientPage: FC = () => {
     const dispatch = useDispatch()

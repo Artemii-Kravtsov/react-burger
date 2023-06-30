@@ -9,8 +9,10 @@ import { useDispatch } from 'react-redux';
 import { TIngredient, TStore } from '../../../utils/types';
 
 
-
-const Ingredient: FC<{data: TIngredient}> = ({ data }) => {
+type TIngredientComponent = {
+    data: TIngredient;
+}
+const Ingredient: FC<TIngredientComponent> = ({ data }) => {
     const dispatch: any = useDispatch()
     const [count, setCount] = useState<number>(0)
     const store = useStore<TStore>()

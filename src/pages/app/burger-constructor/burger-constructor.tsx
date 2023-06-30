@@ -17,12 +17,20 @@ import { TStore, TBlindFunction, TConstructorItem } from '../../../utils/types';
 const BurgerConstructor: FC = () => {
     const navigate = useNavigate();
     const dispatch: any = useDispatch()
-    const getBuns = (store: TStore): [TBlindFunction, number] => store.constructor.buns && store.constructor.buns._id 
-                               ? [store.constructor.buns.onDrop, store.constructor.buns.price * 2]
-                               : [() => undefined, 0]
-    const getFilling = (store: TStore): number => store.constructor.filling.length > 0
-                               ? store.constructor.filling.reduce((part, a) => part + a.price, 0)
-                               : 0
+    function getBuns(store: TStore): [TBlindFunction, number] {
+        if (store.constructor.buns && store.constructor.buns._id) {
+            return [store.constructor.buns.onDrop, store.constructor.buns.price * 2]
+        } else {
+            return [() => undefined, 0]
+        }
+    } 
+    function getFilling(store: TStore): number {
+        if (store.constructor.filling.length > 0) {
+            return store.constructor.filling.reduce((part, a) => part + a.price, 0)
+        } else {
+            return 0
+        }
+    } 
     const [onBunsChange, bunsPrice] = useSelector(getBuns)
     const fillingPrice = useSelector(getFilling)
 

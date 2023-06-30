@@ -7,10 +7,12 @@ import { FC, MouseEvent } from 'react';
 
 
 
+type TIsActive = (a: {isActive: boolean}) => string;
+
 const ProfilePage: FC = () => {
   const activeLink = `${style.link} ${style.activeLink} text text_type_main-medium`
   const inactiveLink = `${style.link} text text_type_main-medium text_color_inactive`
-  const isActive = ({ isActive }: {isActive: boolean}): string => isActive ? activeLink : inactiveLink
+  const isActive: TIsActive = ({ isActive }) => isActive ? activeLink : inactiveLink
   const dispatch: any = useDispatch()
 
   function onLogoutClick(event: MouseEvent) {

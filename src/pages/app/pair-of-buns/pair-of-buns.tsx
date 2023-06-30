@@ -1,17 +1,16 @@
 import style from './pair-of-buns.module.css';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector } from 'react-redux';
-import { FC, ReactNode } from 'react';
+import { FC, PropsWithChildren } from 'react';
 import { TStore } from '../../../utils/types';
 
 
 
 type TPairOfBuns = {
     extraClass: string;
-    children: ReactNode;
 }
 
-const PairOfBuns: FC<TPairOfBuns> = ({ extraClass, children }) => {
+const PairOfBuns: FC<PropsWithChildren<TPairOfBuns>> = ({ extraClass, children }) => {
     const getBuns = (store: TStore) => store.constructor.buns
     const buns = useSelector(getBuns)
     const isEmpty = Object.keys(buns || {}).length ? '' : style.isEmpty

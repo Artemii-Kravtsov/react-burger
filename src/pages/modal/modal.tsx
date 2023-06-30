@@ -2,7 +2,7 @@ import style from './modal.module.css';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { createPortal } from 'react-dom';
 import { useNavigate } from "react-router-dom";
-import { useCallback, useEffect, FC, ReactNode } from 'react';
+import { useCallback, useEffect, FC, PropsWithChildren } from 'react';
 import { TBlindFunction } from '../../utils/types';
 
 
@@ -10,8 +10,10 @@ const ModalOverlay: FC<{closeFunc: TBlindFunction}> = ({ closeFunc }) => {
     return <div className={style.overlay} onClick={closeFunc}></div>
 }
 
-
-const Modal: FC<{header?: string, children: ReactNode}> = ({ header='', children }) => {
+type TModal = {
+    header?: string, 
+}
+const Modal: FC<PropsWithChildren<TModal>> = ({ header='', children }) => {
     const navigate = useNavigate();
     
     const closeModalFunc: TBlindFunction = useCallback(() => navigate(-1), [])
