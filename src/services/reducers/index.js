@@ -6,7 +6,7 @@ import orders from './orders';
 
 
 const initialState = {
-    'browsedIngredient': {},                        // объект текущего просматриваемого ингредиента
+    'browsedIngredient': undefined,                 // объект текущего просматриваемого ингредиента
     'orders': {isFetching: false, 
                fetchingSuccess: true, 
                orders: []},                         // объект созданного заказа
@@ -15,7 +15,7 @@ const initialState = {
                     ingredients: {'Булки': [], 
                                   'Соусы': [], 
                                   'Начинки': []}},  // список всех полученных ингредиентов
-    'constructor': {buns: {}, 
+    'constructor': {buns: undefined, 
                     filling: []},                   // список всех ингредиентов в текущем конструкторе бургера
     'profile': {loggedIn: false, 
                 name: undefined, 

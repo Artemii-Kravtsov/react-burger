@@ -18,7 +18,7 @@ const constructor = (state, action) => {
             filling[hoverIndex] = dragItem
             return {...state, filling}
         case SWAP_WITH_BLANK:
-            const blankIdx = filling.map(x => x['_id'] === -1).indexOf(true)
+            const blankIdx = filling.map(x => x['_id'] === '-1').indexOf(true)
             if (blankIdx === -1) return
             filling[blankIdx] = action.item
             return {...state, filling}
@@ -26,10 +26,10 @@ const constructor = (state, action) => {
             filling.splice(action.index, 1)
             return {...state, filling}
         case ADD_BLANK_ITEM_TO_CONSTRUCTOR:
-            filling.splice(action.index, 0, {'_id': -1, 'price': 0})
+            filling.splice(action.index, 0, {'_id': '-1', 'price': 0})
             return {...state, filling}
         case REMOVE_BLANK_ITEM_FROM_CONSTRUCTOR:
-            return {...state, 'filling': filling.filter(x => x['_id'] !== -1)}
+            return {...state, 'filling': filling.filter(x => x['_id'] !== '-1')}
         case ADD_BUNS_TO_CONSTRUCTOR:
             return {...state, 'buns': action.item}
         case ADD_FILLING_TO_CONSTRUCTOR:

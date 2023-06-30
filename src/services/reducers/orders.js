@@ -7,7 +7,9 @@ const orders = (state, action) => {
     switch (action.type) {
         case ORDER_IS_PLACED:
             const orders = [...state.orders]
-            orders.push({orderId: action.orderId, ingredients: action.ingredients})
+            orders.push({name: action.name, 
+                         orderId: action.orderId, 
+                         ingredients: action.ingredients})
             return {...state, orders}
         case PLACE_AN_ORDER_SUCCESS:
             return {...state, fetchingSuccess: true}
