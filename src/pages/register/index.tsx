@@ -2,7 +2,7 @@ import style from './index.module.css';
 import { PasswordInput, Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useState, useEffect, FormEvent, FC } from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../..';
 import { register } from '../../services/actions/profile';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { TBlindFunction } from '../../utils/types';
@@ -15,7 +15,7 @@ const RegisterPage: FC = () => {
     const [inProcess, setInProcess] = useState<boolean>(false) 
     const [error, setError] = useState<string | undefined>()
 
-    const dispatch: any = useDispatch()
+    const dispatch = useDispatch()
     const navigate = useNavigate()
     const location = useLocation()
     const loginReferer = (location.state && location.state.loginReferer) || '/'

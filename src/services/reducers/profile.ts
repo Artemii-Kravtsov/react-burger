@@ -1,6 +1,11 @@
 import { LOGOUT, LOGIN, SET_USER } from '../actions/profile'
+import { TAnyAction } from '.'
+import { TStore } from '../../utils/types'
 
-const profile = (state, action) => {
+
+const profile = (state: TStore['profile'],
+                 action: TAnyAction
+                 ): TStore['profile'] => {
     switch (action.type) {
         case LOGIN:
             return {loggedIn: true, name: action.name, email: action.email}

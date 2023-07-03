@@ -1,6 +1,6 @@
 import { Navigate, useLocation } from 'react-router-dom';
 import { ReactElement, useEffect, useState, FC } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from '..';
 import { getUser } from '../services/actions/profile';
 import { TStore } from '../utils/types';
 

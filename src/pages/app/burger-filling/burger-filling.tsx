@@ -1,10 +1,10 @@
 import style from './burger-filling.module.css';
 import { useEffect, forwardRef, FC, ForwardedRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../..';
 import { FillingLI, IngredientPlaceholder } from '../filling-li/filling-li';
 import { addBlankItemToConstructor, 
          removeBlankItemFromConstructor } from '../../../services/actions/constructor';
-import { TStore } from '../../../utils/types';
+import { TConstructorItem, TStore } from '../../../utils/types';
 
 
 
@@ -36,7 +36,10 @@ const BurgerFilling: FC<TBurgerFilling> = forwardRef(({ isOver, extraClass, appr
                 { filling.length > 0 
                   ? filling.map((elem, index) => (elem['_id'] === '-1'
                                                   ? <IngredientPlaceholder key={index} index={index} />
-                                                  : <FillingLI key={elem.id} {...elem} extraClass={extraClass} index={index} />)) 
+                                                  : <FillingLI key={(elem as TConstructorItem).id} 
+                                                               {...elem as TConstructorItem} 
+                                                               extraClass={extraClass} 
+                                                               index={index} />)) 
                   : <div className={style.emptyFilling + ' ' + (isOver ? style.hovered : '')}>
                         <h3 className={'tab_name text text_type_main-default'}>Перетащите ингредиенты<br />в эту область</h3>
                     </div>}

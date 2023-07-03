@@ -1,5 +1,3 @@
-import { useDispatch } from 'react-redux';
-
 type Nullable<T> = { [K in keyof T]: T[K] | undefined };
 
 export type TBlindFunction = () => void
@@ -17,11 +15,6 @@ export type THandlers<T> = {
     onSuccess?: (data: T) => void;
     onFinish?: () => void;
 }
-
-export type TActionFunc = (dispatch: ReturnType<typeof useDispatch>) => void
-
-export type TActionFuncWithState = (dispatch: ReturnType<typeof useDispatch>, 
-                                    getState: (...args: any) => TStore) => void
 
 export type TIngredientGroup = 'Булки' | 'Начинки' | 'Соусы'
 
@@ -60,12 +53,19 @@ export type TUserProfile = {
 export type TConstructorItem = TIngredient & {
     onDrop: TBlindFunction;
     id: string;
+    // index: number;
+}
+
+type TBlankItem = {
+    _id: '-1';
+    price: 0;
+    // id?: string;
 }
 
 export type TStore = {
     browsedIngredient: TIngredient | undefined;
     orders: TFetching & {orders: TOrder[]};
     ingredients: TFetching & {ingredients: Record<TIngredientGroup, TIngredient[]>};
-    constructor: {buns: TConstructorItem | undefined, filling: TConstructorItem[]}
+    constructor: {buns: TConstructorItem | undefined, filling: (TConstructorItem | TBlankItem)[]}
     profile: {loggedIn: boolean} & Nullable<Omit<TUserProfile, 'password'>>;
 }

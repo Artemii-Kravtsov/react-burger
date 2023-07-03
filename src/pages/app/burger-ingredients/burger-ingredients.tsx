@@ -1,6 +1,6 @@
 import { useState, useRef, useMemo, FC, LegacyRef, ForwardedRef } from 'react';
 import style from './burger-ingredients.module.css';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../..';
 import GroupOfIngredients from '../group-of-ingredients/group-of-ingredients'
 import { TIngredientGroup, TStore } from '../../../utils/types';
 

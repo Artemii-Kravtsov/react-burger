@@ -14,7 +14,7 @@ import OrderPage from './order-page';
 import ProtectedRoute from './protected-route';
 import { Routes, Route } from 'react-router-dom';
 import { useLocation, Location } from "react-router-dom";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '..';
 import { getIngredients } from '../services/actions/ingredients';
 import { useState, useEffect, FC } from 'react';
 import { TStore } from '../utils/types';

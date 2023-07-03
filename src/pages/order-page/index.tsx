@@ -1,24 +1,26 @@
 import { useState, useEffect, FC } from 'react';
 import style from './index.module.css';
 import blopImg from '../../images/blop.png'
-import { useDispatch, useSelector } from 'react-redux';
 import { placeAnOrder } from '../../services/actions/orders';
 import { TStore } from '../../utils/types';
+import { useDispatch, useSelector } from '../..';
 
 
 const OrderPage: FC = () => {
-    const dispatch: any = useDispatch()
+    const dispatch = useDispatch()
     const [wasFetched, setWasFetched] = useState(false)
     // раньше всех спадёт wasFetched, вытащится старый getOrderId и только потом придёт обновление новым OrderId
     // чтобы этого не было, буду ждать прихода обновления isFetching, и только потом показывать orderId - иначе будет моргать
+    const getConstructor = (store: TStore) => store.constructor
     const getIsFetching = (store: TStore): boolean => store.orders.isFetching
     const getHasError = (store: TStore): boolean => !store.orders.fetchingSuccess
     const getOrderId = (store: TStore): boolean | number => store.orders.orders.length > 0 && store.orders.orders.at(-1)!.orderId
     const isFetching = useSelector(getIsFetching)
     const hasError = useSelector(getHasError)
     const orderId = useSelector(getOrderId)
+    const constructor = useSelector(getConstructor)
     useEffect(() => {
-        dispatch(placeAnOrder({onFinish: setWasFetched.bind(this, true)}))
+        dispatch(placeAnOrder(constructor, {onFinish: setWasFetched.bind(this, true)}))
     }, [dispatch])
 
     return (
