@@ -49,11 +49,11 @@ type TOrderResponse = TResponseSuccess & {
   order: {number: number};
   name: string;
 }
-export const placeAnOrder: AppThunk = (constructor: TStore['constructor'],
-                                       {onSuccess, 
-                                        onError, 
-                                        onFinish}: THandlers<TOrderResponse> = {}
-                                        ) => {
+export const placeAnOrder = (constructor: TStore['constructor'],
+                             {onSuccess, 
+                              onError, 
+                              onFinish}: THandlers<TOrderResponse> = {}
+                              ) => {
   return function(dispatch: AppDispatch) {
     const bunsId = constructor.buns && constructor.buns._id
     const fillingsId = constructor.filling.map(x => x._id)

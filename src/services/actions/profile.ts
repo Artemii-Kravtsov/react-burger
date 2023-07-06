@@ -55,12 +55,12 @@ export const setUser: TSetUser<TUserInfoContent> = ({email, name}) => {
 
 /*   функции - экшены   */
 type TLogInResponse = TResponseSuccess & TUserInfo & TTokens
-export const logIn: AppThunk = (email: string, 
-                                password: string, 
-                                {onError, 
-                                 onSuccess, 
-                                 onFinish}: THandlers<TLogInResponse> = {}
-                                ) => {
+export const logIn = (email: string, 
+                      password: string, 
+                      {onError, 
+                       onSuccess, 
+                       onFinish}: THandlers<TLogInResponse> = {}
+                      ) => {
     return function(dispatch: AppDispatch) {
         function onSuccessFinal(data: TLogInResponse): void {
             dispatch(loggedIn(data['user']))
@@ -80,10 +80,10 @@ export const logIn: AppThunk = (email: string,
 
 
 type TLogOutResponse = TResponseSuccess & TResponseMessage
-export const logOut: AppThunk = ({onError,
-                                  onSuccess, 
-                                  onFinish}: THandlers<TLogOutResponse> = {}
-                                  ) => {
+export const logOut = ({onError,
+                        onSuccess, 
+                        onFinish}: THandlers<TLogOutResponse> = {}
+                        ) => {
     return function(dispatch: AppDispatch) {
         function onSuccessFinal(data: TLogOutResponse): void {
             dispatch(loggedOut())
@@ -104,13 +104,13 @@ export const logOut: AppThunk = ({onError,
 
 
 type TRegisterResponse = TResponseSuccess & TUserInfo & TTokens
-export const register: AppThunk = ({email,
-                                    password, 
-                                    name}: TUserProfile,
-                                   {onSuccess, 
-                                    onError, 
-                                    onFinish}: THandlers<TRegisterResponse> = {}
-                                    ) => {
+export const register = ({email,
+                          password, 
+                          name}: TUserProfile,
+                         {onSuccess, 
+                          onError, 
+                          onFinish}: THandlers<TRegisterResponse> = {}
+                          ) => {
     return function(dispatch: AppDispatch) {
         function onSuccessFinal(data: TRegisterResponse): void {
             dispatch(loggedIn(data['user']))
@@ -130,9 +130,9 @@ export const register: AppThunk = ({email,
 
 
 type TGetUserResponse = TResponseSuccess & TUserInfo
-export const getUser: AppThunk = ({onSuccess,
-                                   onFinish}: THandlers<TGetUserResponse> = {}
-                                   ) => {
+export const getUser = ({onSuccess,
+                         onFinish}: THandlers<TGetUserResponse> = {}
+                         ) => {
     return function(dispatch: AppDispatch) {
         function onSuccessFinal(data: TGetUserResponse) {
             dispatch(loggedIn(data['user']))
@@ -151,11 +151,11 @@ export const getUser: AppThunk = ({onSuccess,
 
 
 type TEditUserResponse = TResponseSuccess & TUserInfo
-export const editUser: AppThunk = (payload: Partial<TUserProfile>, 
-                                   {onSuccess, 
-                                    onError, 
-                                    onFinish}: THandlers<TEditUserResponse> = {}
-                                   ) => {
+export const editUser = (payload: Partial<TUserProfile>, 
+                         {onSuccess, 
+                          onError, 
+                          onFinish}: THandlers<TEditUserResponse> = {}
+                         ) => {
     return function(dispatch: AppDispatch) {
         function onSuccessFinal(data: TEditUserResponse) {
             dispatch(setUser(data['user']))

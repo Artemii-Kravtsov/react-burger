@@ -4,8 +4,7 @@ import './index.css';
 
 import reportWebVitals from './reportWebVitals';
 import { legacy_createStore as createStore, 
-         applyMiddleware, 
-         Dispatch, 
+         applyMiddleware,
          ActionCreator, 
          Action } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
@@ -15,10 +14,10 @@ import { Provider,
          useSelector as selectorHook } from 'react-redux';
 import { rootReducer } from './services/reducers';
 import thunk from 'redux-thunk';
-import { ThunkAction } from 'redux-thunk';
+import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 
 import { TStore } from './utils/types';
-import { TAnyAction, TAnyActionFunc } from './services/reducers';
+import { TAnyAction } from './services/reducers';
 import AppHeader from './pages/app-header';
 import Main from './pages';
 
@@ -29,13 +28,13 @@ const root = ReactDOM.createRoot(
 
 
 
-export type AppDispatch = Dispatch<TAnyAction>; 
+export type AppDispatch = ThunkDispatch<TStore, never, TAnyAction>; 
 export type AppThunk<TReturn = void> = ActionCreator<
   ThunkAction<TReturn, Action, TStore, TAnyAction>
 >
 
 export const useSelector: TypedUseSelectorHook<TStore> = selectorHook;
-export const useDispatch = () => dispatchHook<AppDispatch | AppThunk | any>(); 
+export const useDispatch = () => dispatchHook<AppDispatch>(); 
 
 root.render(
     <Provider store={store}>

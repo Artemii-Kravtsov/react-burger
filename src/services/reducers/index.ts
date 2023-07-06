@@ -29,13 +29,11 @@ const initialState: TStore = {
 }
 
 
-export type TAnyActionFunc = TBrowsedIngredientActions 
-                              | TOrdersActions 
-                              | TProfileActions 
-                              | TConstrunctorActions 
-                              | TIngredientsActions
-
-export type TAnyAction = ReturnType<TAnyActionFunc>
+export type TAnyAction = ReturnType<TBrowsedIngredientActions 
+                                     | TOrdersActions 
+                                     | TProfileActions 
+                                     | TConstrunctorActions 
+                                     | TIngredientsActions>
 
 export const rootReducer = (state: TStore = initialState, 
                             action: TAnyAction,

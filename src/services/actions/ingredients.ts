@@ -43,10 +43,10 @@ export const storeIngredients: TStoreIngredients = (ingredients) => {
 type TGetIngredientsResponse = TResponseSuccess & {
   data: TIngredient[]
 }
-export const getIngredients: AppThunk = ({onSuccess, 
-                                          onError, 
-                                          onFinish}: THandlers<TGetIngredientsResponse>
-                                          ) => {
+export const getIngredients = ({onSuccess, 
+                                onError, 
+                                onFinish}: THandlers<TGetIngredientsResponse>
+                                ) => {
   return function(dispatch: AppDispatch) {
 
     dispatch(getIngredientsSucceeded(true))
