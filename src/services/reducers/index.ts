@@ -3,19 +3,26 @@ import ingredients from './ingredients';
 import constructor from './constructor';
 import profile from './profile';
 import orders from './orders';
+import feed from './ws-feed';
 import { TStore } from '../../utils/types';
 import { TBrowsedIngredientActions } from '../actions/browsed-ingredient';
 import { TOrdersActions } from '../actions/orders';
 import { TProfileActions } from '../actions/profile';
 import { TConstrunctorActions } from '../actions/constructor';
 import { TIngredientsActions } from '../actions/ingredients';
+import { TWSFeedActions } from '../actions/ws-feed';
+import { TWSOrdersActions } from '../actions/ws-orders';
 
 
 const initialState: TStore = {
     'browsedIngredient': undefined,                 // объект текущего просматриваемого ингредиента
+    'feed': {wsConnected: false,                    // лента заказов
+             orders: []},
     'orders': {isFetching: false, 
                fetchingSuccess: true, 
-               orders: []},                         // объект созданного заказа
+               lastOrderId: undefined,
+               wsConnected: false,
+               orders: []},                         // объект созданного заказа и заказы пользователя
     'ingredients': {isFetching: false, 
                     fetchingSuccess: true, 
                     ingredients: {'Булки': [], 
@@ -33,11 +40,14 @@ export type TAnyAction = ReturnType<TBrowsedIngredientActions
                                      | TOrdersActions 
                                      | TProfileActions 
                                      | TConstrunctorActions 
-                                     | TIngredientsActions>
+                                     | TIngredientsActions
+                                     | TWSFeedActions
+                                     | TWSOrdersActions >
 
 export const rootReducer = (state: TStore = initialState, 
                             action: TAnyAction,
                             ): TStore => ({
+    feed: feed(state.feed, action),
     orders: orders(state.orders, action),
     profile: profile(state.profile, action),
     ingredients: ingredients(state.ingredients, action),

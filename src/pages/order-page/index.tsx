@@ -14,7 +14,7 @@ const OrderPage: FC = () => {
     const getConstructor = (store: TStore) => store.constructor
     const getIsFetching = (store: TStore): boolean => store.orders.isFetching
     const getHasError = (store: TStore): boolean => !store.orders.fetchingSuccess
-    const getOrderId = (store: TStore): boolean | number => store.orders.orders.length > 0 && store.orders.orders.at(-1)!.orderId
+    const getOrderId = (store: TStore): undefined | number => store.orders.lastOrderId && store.orders.lastOrderId
     const isFetching = useSelector(getIsFetching)
     const hasError = useSelector(getHasError)
     const orderId = useSelector(getOrderId)

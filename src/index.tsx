@@ -21,7 +21,24 @@ import { TAnyAction } from './services/reducers';
 import AppHeader from './pages/app-header';
 import Main from './pages';
 
-const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));
+import { socketMiddleware } from './services/middlewares/socketMiddleware';
+import { WSFeedActions, WSFeedGenerators } from './services/actions/ws-feed';
+import { WSOrdersActions, WSOrdersGenerators } from './services/actions/ws-orders';
+import { WS_FEED_URL, WS_ORDERS_URL } from './services/constants';
+
+
+const store = createStore(rootReducer, 
+                          composeWithDevTools(
+                                              applyMiddleware(thunk),
+                                              applyMiddleware(socketMiddleware(WS_FEED_URL, 
+                                                                               WSFeedActions, 
+                                                                               WSFeedGenerators)),
+                                              applyMiddleware(socketMiddleware(WS_ORDERS_URL, 
+                                                                               WSOrdersActions, 
+                                                                               WSOrdersGenerators, 
+                                                                               true)),
+                                             )
+                          );
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );

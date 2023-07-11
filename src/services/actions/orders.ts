@@ -1,7 +1,7 @@
 import { BASE_URL } from "../constants";
 import { THandlers, TResponseSuccess } from "../../utils/types";
 import { customFetch } from "../../utils/customFetch";
-import { AppDispatch, AppThunk } from "../..";
+import { AppDispatch } from "../..";
 import { TStore } from "../../utils/types";
 
 /*   экшены   */
@@ -79,8 +79,8 @@ export const placeAnOrder = (constructor: TStore['constructor'],
         },
       onSuccess: (data: TOrderResponse) => {
           dispatch(orderIsPlaced(payload.ingredients, 
-                  data['order']['number'], 
-                  data['name']))
+                                 data['order']['number'], 
+                                 data['name']))
           if (typeof onSuccess === 'function') onSuccess(data)
       }
     })
