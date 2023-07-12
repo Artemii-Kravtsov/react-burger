@@ -3,17 +3,29 @@ import { THandlers, TResponseSuccess } from "../../utils/types";
 import { customFetch } from "../../utils/customFetch";
 import { AppDispatch } from "../..";
 import { TStore } from "../../utils/types";
+import { TWSAnOrder } from "../../utils/types";
 
 /*   экшены   */
 export const ORDER_IS_PLACED: 'ORDER_IS_PLACED' = 'ORDER_IS_PLACED';
 export const PLACE_AN_ORDER_SUCCESS: 'PLACE_AN_ORDER_SUCCESS' = 'PLACE_AN_ORDER_SUCCESS';
 export const PLACE_AN_ORDER_FAILURE: 'PLACE_AN_ORDER_FAILURE' = 'PLACE_AN_ORDER_FAILURE';
 export const PLACE_AN_ORDER_IS_FETCHING: 'PLACE_AN_ORDER_IS_FETCHING' = 'PLACE_AN_ORDER_IS_FETCHING';
+export const SET_BROWSED_ORDER: 'SET_BROWSED_ORDER' = 'SET_BROWSED_ORDER';
+export const REMOVE_BROWSED_ORDER: 'REMOVE_BROWSED_ORDER' = 'REMOVE_BROWSED_ORDER';
 
 
 /*   генераторы экшенов   */
 type TSucceeded = {
   (status: boolean): {readonly type: typeof PLACE_AN_ORDER_SUCCESS | typeof PLACE_AN_ORDER_FAILURE}
+}
+type TSetBrowsedOrder = {
+  (order: TWSAnOrder): {
+    readonly type: typeof SET_BROWSED_ORDER;
+    readonly order: TWSAnOrder;
+  }
+}
+type TRemoveBrowsedOrder = {
+  (): {readonly type: typeof REMOVE_BROWSED_ORDER}
 }
 type TIsFetching = {
   (status: boolean): {
@@ -31,7 +43,7 @@ type TIsPlaced = {
     readonly name: string
   }
 }
-export type TOrdersActions = TSucceeded | TIsFetching | TIsPlaced
+export type TOrdersActions = TSucceeded | TIsFetching | TIsPlaced | TRemoveBrowsedOrder | TSetBrowsedOrder
 
 export const placeAnOrderSucceeded: TSucceeded = (status =true) => {
   return { type: status ? PLACE_AN_ORDER_SUCCESS : PLACE_AN_ORDER_FAILURE };
@@ -41,6 +53,12 @@ export const placeAnOrderIsFetching: TIsFetching = (status = false) => {
 }
 export const orderIsPlaced: TIsPlaced = (ingredients, orderId, name) => {
   return { type: ORDER_IS_PLACED, ingredients, orderId, name };
+}
+export const setBrowsedOrder: TSetBrowsedOrder = (order) => {
+  return { type: SET_BROWSED_ORDER, order };
+}
+export const removeBrowsedOrder: TRemoveBrowsedOrder = () => {
+  return { type: REMOVE_BROWSED_ORDER };
 }
 
 
@@ -69,6 +87,7 @@ export const placeAnOrder = (constructor: TStore['constructor'],
     customFetch<TOrderResponse>(BASE_URL + 'orders', {
       method: 'post', 
       body: JSON.stringify(payload),
+      withRefresh: true,
       onError: (error) => {
           dispatch(placeAnOrderSucceeded(false))
           if (typeof onError === 'function') onError(error)

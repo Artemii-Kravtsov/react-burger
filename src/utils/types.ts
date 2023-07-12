@@ -73,6 +73,7 @@ export type TWSResponse = TResponseSuccess & {
 export type TWSAnOrder = {
     ingredients: string[];
     _id: string;
+    name: string;
     status: 'created' | 'pending' | 'done';
     number: number;
     createdAt: string;
@@ -85,6 +86,7 @@ export type WSPrimitives = {
 }
 
 export type TStore = {
+    browsedOrder: TWSAnOrder | undefined,
     browsedIngredient: TIngredient | undefined;
     feed: WSPrimitives & {orders: TWSAnOrder[]};
     orders: TFetching & WSPrimitives & {lastOrderId: number | undefined, orders: TWSAnOrder[]};

@@ -4,6 +4,7 @@ import { TWSResponse } from "../../utils/types";
 export const WS_FEED_CONNECTION_SUCCESS: 'WS_FEED_CONNECTION_SUCCESS' = 'WS_FEED_CONNECTION_SUCCESS';
 export const WS_FEED_CONNECTION_ERROR: 'WS_FEED_CONNECTION_ERROR' = 'WS_FEED_CONNECTION_ERROR';
 export const WS_FEED_CONNECTION_CLOSED: 'WS_FEED_CONNECTION_CLOSED' = 'WS_FEED_CONNECTION_CLOSED';
+export const WS_FEED_CLOSE_CONNECTION: 'WS_FEED_CLOSE_CONNECTION' = 'WS_FEED_CLOSE_CONNECTION';
 export const WS_FEED_GET_MESSAGE: 'WS_FEED_GET_MESSAGE' = 'WS_FEED_GET_MESSAGE';
 // export const WS_FEED_SEND_MESSAGE: 'WS_FEED_SEND_MESSAGE' = 'WS_FEED_SEND_MESSAGE';
 export const WS_FEED_CONNECTION_START: 'WS_FEED_CONNECTION_START' = 'WS_FEED_CONNECTION_START';
@@ -15,6 +16,9 @@ export const wsFeedInit: TwsFeedInit = () => {
 }
 export const wsFeedSuccess: TwsFeedSuccess = () => {
     return { type: WS_FEED_CONNECTION_SUCCESS };
+}
+export const wsFeedCloseConnection: TwsFeedCloseConnection = () => {
+    return { type: WS_FEED_CLOSE_CONNECTION };
 }
 export const wsFeedError: TwsFeedError = (event) => {
     return { type: WS_FEED_CONNECTION_ERROR, error: event };
@@ -43,6 +47,9 @@ type TwsFeedError = {(event: Event): {
 type TwsFeedClose = {(): {
     readonly type: typeof WS_FEED_CONNECTION_CLOSED
 }}
+type TwsFeedCloseConnection = {(): {
+    readonly type: typeof WS_FEED_CLOSE_CONNECTION
+}}
 type TwsFeedGet = {(
     response: TWSResponse, 
     timestamp: number): TWSResponse & {
@@ -59,9 +66,11 @@ export type TWSFeedActions = TwsFeedInit
                              | TwsFeedError 
                              | TwsFeedClose 
                              | TwsFeedGet 
+                             | TwsFeedCloseConnection
                             //  | TwsFeedSend
 
 export const WSFeedActions = {wsInit: WS_FEED_CONNECTION_START, 
+                              wsClose: WS_FEED_CLOSE_CONNECTION,
                             //    wsSendMessage: WS_FEED_SEND_MESSAGE, 
                               onOpen: WS_FEED_CONNECTION_SUCCESS, 
                               onClose: WS_FEED_CONNECTION_CLOSED, 

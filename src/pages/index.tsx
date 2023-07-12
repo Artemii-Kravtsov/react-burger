@@ -11,6 +11,8 @@ import ForgotPasswordPage from './forgot-password';
 import ProfileTab from './profile/profile-tab/profile-tab';
 import Modal from './modal/modal';
 import OrderPage from './order-page';
+import OrdersHistory from './orders-history';
+import OrderHistoryPage from './order-history-page';
 import ProtectedRoute from './protected-route';
 import { Routes, Route } from 'react-router-dom';
 import { useLocation, Location } from "react-router-dom";
@@ -29,39 +31,49 @@ type TRoutesContainer = {
 const RoutesContainer: FC<TRoutesContainer> = ({location, modalReferer, loginReferer}) => (
     <>
     <Routes location={(!loginReferer && modalReferer) || location}>
-        <Route path="/login" element={<ProtectedRoute 
-                                            element={<LoginPage />} 
-                                            needAuth={false} />} />
-        <Route path="/profile" element={<ProtectedRoute 
-                                              element={<ProfilePage />} />}>
-            <Route path="orders" element={null} />
+        <Route path="/login" 
+          element={<ProtectedRoute 
+                        element={<LoginPage />} 
+                        needAuth={false} />} />
+        <Route path="/profile" 
+          element={<ProtectedRoute element={<ProfilePage />} />}>
+            <Route path="orders" element={<OrdersHistory />} />
             <Route path="" element={<ProfileTab />} />
         </Route>
-        <Route path="/register" element={<ProtectedRoute 
-                                               element={<RegisterPage />} 
-                                               needAuth={false} />} />
-        <Route path="/ingredients/:id" element={<IngredientPage />} />
-        <Route path="/reset-password" element={<ProtectedRoute 
-                                                     element={<ResetPasswordPage />} 
-                                                     needAuth={false} />} />
-        <Route path="/forgot-password" element={<ProtectedRoute 
-                                                      element={<ForgotPasswordPage />} 
-                                                      needAuth={false} />} />
-        <Route path="/" element={<App />} />
-        <Route path="*" element={<Page404 />} />
+        <Route path="/profile/orders/:number" 
+          element={<ProtectedRoute 
+                      element={<OrderHistoryPage isDirect={true}/>} />} />
+        <Route path="/register" 
+          element={<ProtectedRoute 
+                      element={<RegisterPage />} 
+                      needAuth={false} />} />
+        <Route path="/ingredients/:id" 
+          element={<IngredientPage />} />
+        <Route path="/reset-password" 
+          element={<ProtectedRoute 
+                      element={<ResetPasswordPage />} 
+                      needAuth={false} />} />
+        <Route path="/forgot-password" 
+          element={<ProtectedRoute 
+                      element={<ForgotPasswordPage />} 
+                      needAuth={false} />} />
+        <Route path="/" 
+          element={<App />} />
+        <Route path="*" 
+          element={<Page404 />} />
     </Routes>
 
     { (!loginReferer && modalReferer) && (
          <Routes>
            <Route path="/ingredients/:id" 
-               element={
-               <Modal header='Детали ингредиента'>
-                   <IngredientPage />
-               </Modal>} />
+               element={<Modal header='Детали ингредиента'><IngredientPage /></Modal>} 
+               />
            <Route path="/profile/orders" 
-               element={
-                <ProtectedRoute 
-                      element={<Modal><OrderPage /></Modal>} />} />
+               element={<ProtectedRoute element={<Modal><OrderPage /></Modal>} />} 
+               />
+           <Route path="/profile/orders/:number"
+               element={<ProtectedRoute element={<Modal width={720}><OrderHistoryPage /></Modal>} />} 
+               />               
          </Routes>) }
     </>
 )

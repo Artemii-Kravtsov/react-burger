@@ -2,7 +2,7 @@ import browsedIngredient from './browsed-ingredient';
 import ingredients from './ingredients';
 import constructor from './constructor';
 import profile from './profile';
-import orders from './orders';
+import {browsedOrder, orders} from './orders';
 import feed from './ws-feed';
 import { TStore } from '../../utils/types';
 import { TBrowsedIngredientActions } from '../actions/browsed-ingredient';
@@ -16,6 +16,7 @@ import { TWSOrdersActions } from '../actions/ws-orders';
 
 const initialState: TStore = {
     'browsedIngredient': undefined,                 // объект текущего просматриваемого ингредиента
+    'browsedOrder': undefined,                      // объект текущего просматриваемого заказа
     'feed': {wsConnected: false,                    // лента заказов
              orders: []},
     'orders': {isFetching: false, 
@@ -52,5 +53,6 @@ export const rootReducer = (state: TStore = initialState,
     profile: profile(state.profile, action),
     ingredients: ingredients(state.ingredients, action),
     constructor: constructor(state.constructor, action),
+    browsedOrder: browsedOrder(state.browsedOrder, action),
     browsedIngredient: browsedIngredient(state.browsedIngredient, action),
 })

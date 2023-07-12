@@ -1,15 +1,18 @@
 
 .profileContainer {
-    margin-top: 15vh;
+    margin-top: 5vh;
     display: flex;
     gap: 60px;
     align-items: flex-start;
+    width: 100%;
 }
 
 .nav {
+    margin-top: 10vh;
     display: inline-flex;
     flex-direction: column;
     gap: 30px;
+    flex-shrink: 0;
 }
 
 .link {
@@ -24,4 +27,5 @@
 .tabContainer {
     display: flex;
     flex-direction: column;
+    flex-grow: 1;
 }

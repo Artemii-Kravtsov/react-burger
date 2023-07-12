@@ -1,0 +1,18 @@
+.container {
+    max-height: calc(100vh - 30px - 5vh - 90px);
+    width: 100%;
+}
+
+.container li ~ li {
+    margin-top: 24px;
+}
+
+.placeholder {
+    margin-top: 10vh;
+    display: flex;
+}
+
+.placeholder p {
+    text-align: center;
+    margin: auto;
+}

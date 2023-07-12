@@ -20,11 +20,18 @@ export const socketMiddleware = (wsUrl: string,
       return next => (action: TAnyAction) => {
         const { dispatch, getState } = store;
         const { type } = action;
-        const { wsInit } = wsActions;
+        const { wsInit, wsClose } = wsActions;
         const { onOpenGen, onCloseGen, onErrorGen, onMessageGen } = wsGenerators;
         const { loggedIn } = getState().profile;
         if (type === wsInit && loggedIn) {
-            const url = wsUrl + (addToken ? `?token=${getCookie('accessToken')}` : '')
+
+            let url = wsUrl 
+            if (addToken) {
+              const token = getCookie('accessToken')
+              if (token) {
+                  url = url + '?token=' + token.replace('Bearer ','')
+              } 
+            }
             socket = new WebSocket(url);
             socket.onopen = event => {
               dispatch(onOpenGen());
@@ -40,6 +47,10 @@ export const socketMiddleware = (wsUrl: string,
             socket.onclose = event => {
               dispatch(onCloseGen());
             };
+        }
+
+        if (type === wsClose && socket) {
+            socket.close()
         }
   
         // if (socket && type === wsSendMessage) {

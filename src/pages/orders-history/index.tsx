@@ -1,0 +1,46 @@
+import style from './index.module.css';
+import { useDispatch } from '../..';
+import { FC, useEffect } from 'react';
+import { wsOrdersInit, wsOrdersCloseConnection } from '../../services/actions/ws-orders';
+import { useSelector } from 'react-redux';
+import { TStore } from '../../utils/types';
+import OrderLI from '../order-li';
+
+const OrdersHistory: FC = () => {
+    const getOrders = (store: TStore) => store.orders
+    const {wsConnected, error, orders} = useSelector(getOrders)
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(wsOrdersInit())
+        return () => {dispatch(wsOrdersCloseConnection())}
+    }, [])
+
+    return (
+        <>
+        {!wsConnected && !error && (
+            <div className={style.placeholder}>
+                <p className="text text_type_main-medium">Загружаю историю заказов..</p>
+            </div>
+        )}
+        {!wsConnected && error && (
+            <div className={style.placeholder}>
+                <p className="text text_type_main-medium">Произошла ошибка при подключении</p>
+            </div>
+        )}
+        {wsConnected && orders.length === 0 && (
+            <div className={style.placeholder}>
+                <p className="text text_type_main-medium">Вы пока что не оставили ни одного заказа</p>
+            </div>
+        )}
+        {wsConnected && orders.length > 0 && (
+            <ol className={`${style.container} scrollable`}>
+                {orders.map((x) => <OrderLI key={x['_id']} {...x} />)}
+            </ol>  
+        )}
+        </>
+    )
+}
+
+
+export default OrdersHistory;

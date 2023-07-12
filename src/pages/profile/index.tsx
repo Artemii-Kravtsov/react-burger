@@ -50,6 +50,7 @@ const ProfilePage: FC = () => {
       <div className={style.tabContainer}>
         <Outlet />
       </div>
+      <div id="profile-modals"></div>
     </div>      
   )
 }
