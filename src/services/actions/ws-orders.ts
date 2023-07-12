@@ -77,7 +77,8 @@ export const WSOrdersActions = {wsInit: WS_ORDERS_CONNECTION_START,
                                 onError: WS_ORDERS_CONNECTION_ERROR, 
                                 onMessage: WS_ORDERS_GET_MESSAGE}
 
-export const WSOrdersGenerators = {onOpenGen: wsOrdersSuccess, 
+export const WSOrdersGenerators = {wsInitGen: wsOrdersInit,
+                                   onOpenGen: wsOrdersSuccess, 
                                    onCloseGen: wsOrdersClose, 
                                    onErrorGen: wsOrdersError, 
                                    onMessageGen: wsOrdersGet}                                 

@@ -7,6 +7,9 @@ import { getCookie } from '../../utils/cookies';
 import { WSFeedActions, WSFeedGenerators } from '../actions/ws-feed';
 import { WSOrdersActions, WSOrdersGenerators } from '../actions/ws-orders';
 import { TWSResponse } from '../../utils/types';
+import { customFetch } from '../../utils/customFetch';
+import { BASE_URL } from '../constants';
+import { saveTokens } from '../../utils/tokens';
 
 
 export const socketMiddleware = (wsUrl: string, 
@@ -21,7 +24,7 @@ export const socketMiddleware = (wsUrl: string,
         const { dispatch, getState } = store;
         const { type } = action;
         const { wsInit, wsClose } = wsActions;
-        const { onOpenGen, onCloseGen, onErrorGen, onMessageGen } = wsGenerators;
+        const { wsInitGen, onOpenGen, onCloseGen, onErrorGen, onMessageGen } = wsGenerators;
         const { loggedIn } = getState().profile;
         if (type === wsInit && (!addToken || loggedIn)) {
 
@@ -44,8 +47,22 @@ export const socketMiddleware = (wsUrl: string,
               const parsedData: TWSResponse = JSON.parse(data);
               dispatch(onMessageGen(parsedData, getCurrentTimestamp()));
             };
-            socket.onclose = event => {
-              dispatch(onCloseGen());
+            socket.onclose = (event: CloseEvent) => {
+              console.log(event.reason)
+              if (event.reason === 'Invalid or missing token') {
+                const token = localStorage.getItem('refreshToken')
+                customFetch(BASE_URL + 'auth/token', 
+                            {method: 'post',
+                             body: JSON.stringify({ token }),
+                             onError: () => dispatch(onCloseGen()),
+                             onSuccess: (data: {refreshToken: string, 
+                                                accessToken: string}) => {
+                                saveTokens(data);
+                                dispatch(wsInitGen());
+                            }})
+              } else {
+                dispatch(onCloseGen())
+              }
             };
         }
 

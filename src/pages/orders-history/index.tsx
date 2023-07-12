@@ -2,10 +2,10 @@ import style from './index.module.css';
 import { useDispatch } from '../..';
 import { FC, useEffect } from 'react';
 import { wsOrdersInit, wsOrdersCloseConnection } from '../../services/actions/ws-orders';
-import { useSelector } from 'react-redux';
 import { TStore } from '../../utils/types';
 import { TWSAnOrder } from '../../utils/types';
 import { useNavigate } from "react-router-dom";
+import { useSelector } from '../..';
 import OrderLI from '../order-li';
 
 

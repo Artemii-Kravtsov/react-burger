@@ -1,9 +1,8 @@
 import style from './pair-of-buns.module.css';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useSelector } from 'react-redux';
 import { FC, PropsWithChildren } from 'react';
 import { TStore } from '../../../utils/types';
-
+import { useSelector } from '../../..';
 
 
 type TPairOfBuns = {

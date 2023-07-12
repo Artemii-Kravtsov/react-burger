@@ -3,9 +3,9 @@ import { useDispatch } from '../..';
 import { useNavigate } from "react-router-dom";
 import { FC, useEffect } from 'react';
 import { wsFeedInit, wsFeedCloseConnection } from '../../services/actions/ws-feed';
-import { useSelector } from 'react-redux';
 import { TStore, TWSAnOrder } from '../../utils/types';
 import OrderLI from '../order-li';
+import { useSelector } from '../..';
 
 
 const Feed: FC = () => {

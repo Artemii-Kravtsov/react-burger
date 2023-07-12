@@ -94,7 +94,7 @@ const RoutesContainer: FC<TRoutesContainer> = ({location, modalReferer, loginRef
 
 
 const Main = () => {
-    const dispatch: any = useDispatch()
+    const dispatch = useDispatch()
     const [wasFetched, setWasFetched] = useState(false)
     const getError = (store: TStore) => !store.ingredients.fetchingSuccess
     const hasError = useSelector(getError)

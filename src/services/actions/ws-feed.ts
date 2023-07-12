@@ -77,7 +77,8 @@ export const WSFeedActions = {wsInit: WS_FEED_CONNECTION_START,
                               onError: WS_FEED_CONNECTION_ERROR, 
                               onMessage: WS_FEED_GET_MESSAGE}
 
-export const WSFeedGenerators = {onOpenGen: wsFeedSuccess, 
+export const WSFeedGenerators = {wsInitGen: wsFeedInit,
+                                 onOpenGen: wsFeedSuccess, 
                                  onCloseGen: wsFeedClose, 
                                  onErrorGen: wsFeedError, 
                                  onMessageGen: wsFeedGet}

@@ -1,6 +1,5 @@
 import style from './index.module.css';
 import { FC } from 'react';
-import { useSelector } from 'react-redux';
 import { TWSAnOrder } from '../../utils/types';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { setBrowsedOrder } from '../../services/actions/orders';
@@ -8,6 +7,8 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { formatDate } from '../../utils/formatDate';
 import { getOrderByIdsSelector } from '../../utils/getOrderByIdsSelector';
+import { useSelector } from '../..';
+
 
 
 enum statuses { 

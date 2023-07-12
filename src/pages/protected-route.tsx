@@ -12,7 +12,7 @@ type TProtectedRoute = {
 }
 
 const ProtectedRoute: FC<TProtectedRoute> = ({ element, needAuth=true }) => {
-    const dispatch: any = useDispatch()
+    const dispatch = useDispatch()
     const getLoggedIn = (store: TStore) => store.profile.loggedIn;
     const loggedIn = useSelector(getLoggedIn);
     const [userWillBeLoaded, setUserWillBeLoaded] = useState<boolean>(true)
