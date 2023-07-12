@@ -4,12 +4,21 @@ import { FC, useEffect } from 'react';
 import { wsOrdersInit, wsOrdersCloseConnection } from '../../services/actions/ws-orders';
 import { useSelector } from 'react-redux';
 import { TStore } from '../../utils/types';
+import { TWSAnOrder } from '../../utils/types';
+import { useNavigate } from "react-router-dom";
 import OrderLI from '../order-li';
+
 
 const OrdersHistory: FC = () => {
     const getOrders = (store: TStore) => store.orders
     const {wsConnected, error, orders} = useSelector(getOrders)
     const dispatch = useDispatch()
+    const navigate = useNavigate()
+
+    const onClick = (order: TWSAnOrder) => {
+        navigate(`/profile/orders/${order.number}`, 
+                 {state: {modalReferer: '/profile/orders/'}})
+    }
 
     useEffect(() => {
         dispatch(wsOrdersInit())
@@ -35,7 +44,7 @@ const OrdersHistory: FC = () => {
         )}
         {wsConnected && orders.length > 0 && (
             <ol className={`${style.container} scrollable`}>
-                {orders.map((x) => <OrderLI key={x['_id']} {...x} />)}
+                {orders.map((x) => <OrderLI key={x['_id']} {...x} onClick={onClick} />)}
             </ol>  
         )}
         </>

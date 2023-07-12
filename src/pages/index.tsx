@@ -1,6 +1,7 @@
 import style from './index.module.css';
 
 import App from './app';
+import Feed from './feed';
 import LoginPage from './login';
 import Page404 from './page-404';
 import IngredientPage from './ingredient-page';
@@ -32,31 +33,41 @@ const RoutesContainer: FC<TRoutesContainer> = ({location, modalReferer, loginRef
     <>
     <Routes location={(!loginReferer && modalReferer) || location}>
         <Route path="/login" 
-          element={<ProtectedRoute 
-                        element={<LoginPage />} 
-                        needAuth={false} />} />
-        <Route path="/profile" 
-          element={<ProtectedRoute element={<ProfilePage />} />}>
-            <Route path="orders" element={<OrdersHistory />} />
-            <Route path="" element={<ProfileTab />} />
+               element={<ProtectedRoute 
+                               element={<LoginPage />} 
+                               needAuth={false} />} />
+        <Route path="/feed" 
+               element={<Feed />} >
+            <Route path="" 
+                   element={<OrdersHistory />} />
         </Route>
+        <Route path="/profile" 
+               element={<ProtectedRoute 
+                               element={<ProfilePage />} />}>
+            <Route path="orders" 
+                   element={<OrdersHistory />} />
+            <Route path="" 
+                   element={<ProfileTab />} />
+        </Route>
+        <Route path="/feed/:number" 
+               element={<OrderHistoryPage isDirect={true}/>} />   
         <Route path="/profile/orders/:number" 
-          element={<ProtectedRoute 
-                      element={<OrderHistoryPage isDirect={true}/>} />} />
+               element={<ProtectedRoute 
+                               element={<OrderHistoryPage isDirect={true}/>} />} />
         <Route path="/register" 
-          element={<ProtectedRoute 
-                      element={<RegisterPage />} 
-                      needAuth={false} />} />
+               element={<ProtectedRoute 
+                               element={<RegisterPage />} 
+                               needAuth={false} />} />
         <Route path="/ingredients/:id" 
-          element={<IngredientPage />} />
+               element={<IngredientPage />} />
         <Route path="/reset-password" 
-          element={<ProtectedRoute 
-                      element={<ResetPasswordPage />} 
-                      needAuth={false} />} />
+               element={<ProtectedRoute 
+                               element={<ResetPasswordPage />} 
+                               needAuth={false} />} />
         <Route path="/forgot-password" 
-          element={<ProtectedRoute 
-                      element={<ForgotPasswordPage />} 
-                      needAuth={false} />} />
+               element={<ProtectedRoute 
+                               element={<ForgotPasswordPage />} 
+                               needAuth={false} />} />
         <Route path="/" 
           element={<App />} />
         <Route path="*" 
@@ -71,9 +82,12 @@ const RoutesContainer: FC<TRoutesContainer> = ({location, modalReferer, loginRef
            <Route path="/profile/orders" 
                element={<ProtectedRoute element={<Modal><OrderPage /></Modal>} />} 
                />
+           <Route path="/feed/:number"
+               element={<Modal width={720}><OrderHistoryPage /></Modal>} 
+               />               
            <Route path="/profile/orders/:number"
                element={<ProtectedRoute element={<Modal width={720}><OrderHistoryPage /></Modal>} />} 
-               />               
+               />
          </Routes>) }
     </>
 )

@@ -88,7 +88,7 @@ export type WSPrimitives = {
 export type TStore = {
     browsedOrder: TWSAnOrder | undefined,
     browsedIngredient: TIngredient | undefined;
-    feed: WSPrimitives & {orders: TWSAnOrder[]};
+    feed: WSPrimitives & {orders: TWSAnOrder[], total?: number, totalToday?: number};
     orders: TFetching & WSPrimitives & {lastOrderId: number | undefined, orders: TWSAnOrder[]};
     ingredients: TFetching & {ingredients: Record<TIngredientGroup, TIngredient[]>};
     constructor: {buns: TConstructorItem | undefined, filling: (TConstructorItem | TBlankItem)[]}

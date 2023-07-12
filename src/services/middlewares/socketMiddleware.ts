@@ -23,7 +23,7 @@ export const socketMiddleware = (wsUrl: string,
         const { wsInit, wsClose } = wsActions;
         const { onOpenGen, onCloseGen, onErrorGen, onMessageGen } = wsGenerators;
         const { loggedIn } = getState().profile;
-        if (type === wsInit && loggedIn) {
+        if (type === wsInit && (!addToken || loggedIn)) {
 
             let url = wsUrl 
             if (addToken) {

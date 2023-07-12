@@ -11,13 +11,19 @@ const feed = (state: TStore['feed'],
               ): TStore['feed'] => {
 switch (action.type) {
    case WS_FEED_CONNECTION_CLOSED:
-       return {...state, error: undefined, wsConnected: false}
+       const { total, totalToday, ...newState } = state 
+       return {...newState, 
+               error: undefined, 
+               wsConnected: false, 
+               orders: []}
    case WS_FEED_CONNECTION_ERROR:
        return {...state, error: action.error, wsConnected: false}
    case WS_FEED_CONNECTION_SUCCESS:
        return {...state, error: undefined, wsConnected: true}
    case WS_FEED_GET_MESSAGE:
-       return {...state, orders: action.orders}
+       return {...state, orders: action.orders, 
+                         total: action.total, 
+                         totalToday: action.totalToday}
    default:
        return state
 }

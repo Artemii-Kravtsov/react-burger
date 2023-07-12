@@ -1,9 +1,7 @@
 import style from './index.module.css';
 import { FC } from 'react';
 import { useSelector } from 'react-redux';
-import { TStore } from '../../utils/types';
 import { TWSAnOrder } from '../../utils/types';
-import { TIngredientGroup, TIngredient } from '../../utils/types';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { setBrowsedOrder } from '../../services/actions/orders';
 import { useNavigate } from "react-router-dom";
@@ -18,10 +16,15 @@ enum statuses {
     done = "Выполнен"
 };
 
-const OrderLI: FC<TWSAnOrder> = (order) => {
+
+type TOrderLI = TWSAnOrder & {
+    onClick: (order: TWSAnOrder) => void
+}
+
+const OrderLI: FC<TOrderLI> = (order) => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const { _id, updatedAt, status, name, number, ingredients } = order
+    const { _id, updatedAt, status, name, number, ingredients, onClick } = order
     const remainingIngCount = Math.max(0, ingredients.length - 6)
     const orders = useSelector(getOrderByIdsSelector(ingredients))
     const images = orders.slice(0, 6).map((x) => x['image_mobile'])
@@ -29,7 +32,7 @@ const OrderLI: FC<TWSAnOrder> = (order) => {
 
     function onOrderClick() {
         dispatch(setBrowsedOrder(order))
-        navigate(`/profile/orders/${number}`, {state: {modalReferer: '/profile/orders/'}})
+        onClick(order)
     }
 
     return (
