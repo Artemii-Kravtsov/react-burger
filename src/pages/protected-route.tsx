@@ -1,6 +1,6 @@
 import { Navigate, useLocation } from 'react-router-dom';
 import { ReactElement, useEffect, useState, FC } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from '..';
 import { getUser } from '../services/actions/profile';
 import { TStore } from '../utils/types';
 
@@ -12,7 +12,7 @@ type TProtectedRoute = {
 }
 
 const ProtectedRoute: FC<TProtectedRoute> = ({ element, needAuth=true }) => {
-    const dispatch: any = useDispatch()
+    const dispatch = useDispatch()
     const getLoggedIn = (store: TStore) => store.profile.loggedIn;
     const loggedIn = useSelector(getLoggedIn);
     const [userWillBeLoaded, setUserWillBeLoaded] = useState<boolean>(true)

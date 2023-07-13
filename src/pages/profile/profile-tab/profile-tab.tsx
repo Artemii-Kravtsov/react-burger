@@ -1,15 +1,14 @@
 import style from './profile-tab.module.css'
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useSelector } from 'react-redux';
 import { useState, useCallback, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from '../../..';
 import { editUser } from '../../../services/actions/profile';
 import { FC, FormEvent } from 'react';
 import { TBlindFunction, TStore, TUserProfile } from '../../../utils/types';
 
 
 const ProfileTab: FC = () => {
-  const dispatch: any = useDispatch()
+  const dispatch = useDispatch()
   const getProfile = (store: TStore) => store.profile
   const {email, name} = useSelector(getProfile)
   const [newName, setName] = useState(name)

@@ -1,0 +1,96 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: flex-start;
+    text-align: left;
+}
+
+
+.pageContainer {
+    margin-top: -140px;
+    width: 700px;
+    margin: 150px auto;
+}
+
+.pageContainer p:nth-child(1) {
+    align-self: center;
+}
+
+.modalContainer {
+    margin-top: -40px;
+}
+
+.ingredients {
+    max-height: 350px;
+    width: 100%;
+    padding-right: 24px;
+}
+
+.ingRow {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: center;
+    text-align: left;
+    font-size: 20;
+}
+
+.ingRow ~ .ingRow {
+    margin-top: 15px;
+}
+
+.imgWrap {
+    height: 60px;
+    width: 60px;
+    border: 3px solid #7721bdbe;
+    border-radius: 100%; 
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.imgWrap img {
+    height: 100%;
+    width: auto;
+    background-color: var(--modal_bg_color);
+}
+
+.price {
+    display: flex;
+    align-items: center;
+}
+
+.price svg {
+    height: 30px;
+    width: 30px;
+}
+
+.price p {
+    font-size: 28px;
+}
+
+.lastLine {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.lastLine .price svg {
+    height: 34px;
+    width: 34px;
+}
+
+.lastLine .price p {
+    font-size: 32px;
+}
+
+.placeholder {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

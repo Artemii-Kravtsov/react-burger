@@ -2,19 +2,17 @@ import style from './index.module.css';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useState, useEffect, FC } from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from '../..';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { logIn } from '../../services/actions/profile';
-import { TStore, TBlindFunction } from '../../utils/types';
+import { TBlindFunction } from '../../utils/types';
 
 
 const LoginPage: FC = () => {
-    const getLoggedIn = (store: TStore): boolean => store.profile['loggedIn'];
-    const loggedIn = useSelector(getLoggedIn);
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
     const [inProcess, setInProcess] = useState<boolean>(false)
-    const dispatch: any = useDispatch()  // отключаю проверку экшена
+    const dispatch = useDispatch()  // отключаю проверку экшена
     const navigate = useNavigate()
     const location = useLocation()
     const [error, setError] = useState<string | undefined>()

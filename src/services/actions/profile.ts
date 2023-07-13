@@ -2,38 +2,56 @@ import { BASE_URL } from "../constants";
 import { customFetch } from "../../utils/customFetch";
 import { saveTokens, clearTokens } from "../../utils/tokens";
 import { THandlers, 
-         TUserProfile, 
-         TActionFunc, 
+         TUserProfile,
          TResponseSuccess, 
          TResponseMessage } from "../../utils/types";
+import { AppDispatch, AppThunk } from "../..";
 
 
 /*   экшены   */
-export const LOGIN = 'LOGIN';
-export const LOGOUT = 'LOGOUT';
-export const SET_USER = 'SET_USER';
+export const LOGIN: 'LOGIN' = 'LOGIN';
+export const LOGOUT: 'LOGOUT' = 'LOGOUT';
+export const SET_USER: 'SET_USER' = 'SET_USER';
+
 
 
 /*   генераторы экшенов   */
-export function loggedIn({email, name}: {email: string, name: string}) {
-    return { type: LOGIN, email, name };
+type TUserInfoContent = {
+    readonly email: string;
+    readonly name: string;
 }
-export function loggedOut() {
-    return { type: LOGOUT };
+type TLoggedIn<UserData> = {
+    (a: UserData): UserData & {
+        readonly type: typeof LOGIN;
+    }
 }
-export function setUser({email, name}: {email: string, name: string}) {
-    return { type: SET_USER, email, name };
+type TLoggedOut = {
+    (): {readonly type: typeof LOGOUT;}
 }
-
-
-type TUserInfo = {
-    user: {email: string, name: string};
+type TSetUser<UserData> = {
+    (a: UserData): UserData & {
+        readonly type: typeof SET_USER;
+    }
 }
+type TUserInfo = Record<'user', TUserInfoContent>;
 
 type TTokens = {
     accessToken: string;
     refreshToken: string;
 }
+
+export type TProfileActions = TLoggedIn<TUserInfoContent> | TSetUser<TUserInfoContent> | TLoggedOut
+
+export const loggedIn: TLoggedIn<TUserInfoContent> = ({email, name}) => {
+    return { type: LOGIN, email, name };
+}
+export const loggedOut: TLoggedOut = () => {
+    return { type: LOGOUT };
+}
+export const setUser: TSetUser<TUserInfoContent> = ({email, name}) => {
+    return { type: SET_USER, email, name };
+}
+
 
 /*   функции - экшены   */
 type TLogInResponse = TResponseSuccess & TUserInfo & TTokens
@@ -42,8 +60,8 @@ export const logIn = (email: string,
                       {onError, 
                        onSuccess, 
                        onFinish}: THandlers<TLogInResponse> = {}
-                      ): TActionFunc => {
-    return function(dispatch) {
+                      ) => {
+    return function(dispatch: AppDispatch) {
         function onSuccessFinal(data: TLogInResponse): void {
             dispatch(loggedIn(data['user']))
             saveTokens(data)
@@ -65,8 +83,8 @@ type TLogOutResponse = TResponseSuccess & TResponseMessage
 export const logOut = ({onError,
                         onSuccess, 
                         onFinish}: THandlers<TLogOutResponse> = {}
-                        ): TActionFunc => {
-    return function(dispatch) {
+                        ) => {
+    return function(dispatch: AppDispatch) {
         function onSuccessFinal(data: TLogOutResponse): void {
             dispatch(loggedOut())
             clearTokens()
@@ -92,8 +110,8 @@ export const register = ({email,
                          {onSuccess, 
                           onError, 
                           onFinish}: THandlers<TRegisterResponse> = {}
-                          ): TActionFunc => {
-    return function(dispatch) {
+                          ) => {
+    return function(dispatch: AppDispatch) {
         function onSuccessFinal(data: TRegisterResponse): void {
             dispatch(loggedIn(data['user']))
             saveTokens(data)
@@ -114,8 +132,8 @@ export const register = ({email,
 type TGetUserResponse = TResponseSuccess & TUserInfo
 export const getUser = ({onSuccess,
                          onFinish}: THandlers<TGetUserResponse> = {}
-                         ): TActionFunc => {
-    return function(dispatch) {
+                         ) => {
+    return function(dispatch: AppDispatch) {
         function onSuccessFinal(data: TGetUserResponse) {
             dispatch(loggedIn(data['user']))
             if (typeof onSuccess === 'function') {
@@ -137,8 +155,8 @@ export const editUser = (payload: Partial<TUserProfile>,
                          {onSuccess, 
                           onError, 
                           onFinish}: THandlers<TEditUserResponse> = {}
-                         ): TActionFunc => {
-    return function(dispatch) {
+                         ) => {
+    return function(dispatch: AppDispatch) {
         function onSuccessFinal(data: TEditUserResponse) {
             dispatch(setUser(data['user']))
             if (typeof onSuccess === 'function') {

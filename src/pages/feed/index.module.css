@@ -1,0 +1,59 @@
+.placeholder {
+    margin-top: 40px;
+}
+
+
+.feedWrap {
+    width: 100%;
+    margin-top: 40px;
+}
+
+.statsWrap {
+    margin-left: 20px;
+    width: 100%;
+    margin-top: calc(16px + 45px + 40px);
+    display: flex;
+    flex-direction: column;
+}
+
+.statsWrap p {
+    margin-top: 60px;
+}
+
+.feed {
+    padding-left: 0px;
+    padding-right: 0px;
+    max-height: calc(100vh - 90px - 40px - 45px - 30px);
+}
+
+.feed li ~ li {
+    margin-top: 24px;
+}
+
+.tableau {
+    display: flex;
+    gap: 36px;
+}
+
+.tableauBox {
+    width: 100%;
+}
+
+.tableauOL {
+    gap: 2px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    max-height: calc((5 * 30px) + (4 * 2px));
+    padding: 0;
+    margin: 0;
+    margin-top: 24px;
+}
+
+.tableauLI {
+    height: 30px
+}
+
+.metrics {
+    text-shadow: 0 0 1rem var(--active_color), 0 0 0.2rem var(--active_color);
+}

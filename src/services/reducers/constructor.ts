@@ -6,8 +6,12 @@ import {ADD_FILLING_TO_CONSTRUCTOR,
         REMOVE_ITEM_FROM_CONSTRUCTOR, 
         ADD_BLANK_ITEM_TO_CONSTRUCTOR,
         REMOVE_BLANK_ITEM_FROM_CONSTRUCTOR} from '../actions/constructor'
+import { TAnyAction } from '.'
+import { TStore } from '../../utils/types'
 
-const constructor = (state, action) => {
+const constructor = (state: TStore['constructor'], 
+                     action: TAnyAction
+                     ): TStore['constructor'] => {
     const filling = [...state.filling]
     switch (action.type) {
         case SWAP_CONSTRUCTOR_ITEMS:
@@ -19,7 +23,7 @@ const constructor = (state, action) => {
             return {...state, filling}
         case SWAP_WITH_BLANK:
             const blankIdx = filling.map(x => x['_id'] === '-1').indexOf(true)
-            if (blankIdx === -1) return
+            if (blankIdx === -1) return state
             filling[blankIdx] = action.item
             return {...state, filling}
         case REMOVE_ITEM_FROM_CONSTRUCTOR:
@@ -37,7 +41,7 @@ const constructor = (state, action) => {
             filling.splice(index, 0, item)
             return {...state, filling}
         case RESET_CONSTRUCTOR:
-            return {'buns': {}, 'filling': []}
+            return {'buns': undefined, 'filling': []}
         default:
             return state
     }

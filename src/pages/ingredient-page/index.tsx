@@ -1,7 +1,6 @@
 import style from './index.module.css';
-import { useSelector } from 'react-redux';
 import { removeBrowsedIngredient } from '../../services/actions/browsed-ingredient';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from '../..';
 import { useEffect, FC } from 'react';
 import { useParams } from 'react-router-dom';
 import { TIngredient, TStore, TIngredientGroup, TBlindFunction } from '../../utils/types';

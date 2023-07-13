@@ -1,23 +1,40 @@
 import { BASE_URL } from "../constants";
-import { THandlers, TActionFunc, TResponseSuccess, TIngredient,TIngredientGroup } from "../../utils/types";
+import { THandlers, TResponseSuccess, TIngredient, TIngredientGroup } from "../../utils/types";
 import { customFetch } from "../../utils/customFetch";
-
+import { AppThunk, AppDispatch } from "../..";
 
 /*   экшены   */
-export const GET_INGREDIENTS_IS_FETCHING = 'GET_INGREDIENTS_IS_FETCHING';
-export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS';
-export const GET_INGREDIENTS_FAILURE = 'GET_INGREDIENTS_FAILURE';
-export const STORE_INGREDIENTS = 'STORE_INGREDIENTS';
+export const GET_INGREDIENTS_IS_FETCHING: 'GET_INGREDIENTS_IS_FETCHING' = 'GET_INGREDIENTS_IS_FETCHING';
+export const GET_INGREDIENTS_SUCCESS: 'GET_INGREDIENTS_SUCCESS' = 'GET_INGREDIENTS_SUCCESS';
+export const GET_INGREDIENTS_FAILURE: 'GET_INGREDIENTS_FAILURE' = 'GET_INGREDIENTS_FAILURE';
+export const STORE_INGREDIENTS: 'STORE_INGREDIENTS' = 'STORE_INGREDIENTS';
 
 
 /*   генераторы экшенов   */
-export function getIngredientsSucceeded(status=true) {
+type TSucceeded = {
+  (status: boolean): {readonly type: typeof GET_INGREDIENTS_SUCCESS | typeof GET_INGREDIENTS_FAILURE}
+}
+type TIsFetching = {
+  (status: boolean): {
+    readonly type: typeof GET_INGREDIENTS_IS_FETCHING;
+    readonly status: boolean
+  }
+}
+type TStoreIngredients = {
+  (ingredients: Record<TIngredientGroup, TIngredient[]>): {
+    readonly type: typeof STORE_INGREDIENTS;
+    readonly ingredients: Record<TIngredientGroup, TIngredient[]>
+  }
+}
+export type TIngredientsActions = TStoreIngredients | TIsFetching | TSucceeded
+
+export const getIngredientsSucceeded: TSucceeded = (status=true) => {
   return { type: status ? GET_INGREDIENTS_SUCCESS : GET_INGREDIENTS_FAILURE };
 }
-export function getIngredientsIsFetching(status=false) {
+export const getIngredientsIsFetching: TIsFetching = (status=false) => {
   return { type: GET_INGREDIENTS_IS_FETCHING, status };
 }
-export function storeIngredients(ingredients: Record<TIngredientGroup, TIngredient[]>) {
+export const storeIngredients: TStoreIngredients = (ingredients) => {
   return { type: STORE_INGREDIENTS, ingredients };
 }
 
@@ -26,11 +43,11 @@ export function storeIngredients(ingredients: Record<TIngredientGroup, TIngredie
 type TGetIngredientsResponse = TResponseSuccess & {
   data: TIngredient[]
 }
-export function getIngredients({onSuccess, 
+export const getIngredients = ({onSuccess, 
                                 onError, 
                                 onFinish}: THandlers<TGetIngredientsResponse>
-                                ): TActionFunc {
-  return function(dispatch) {
+                                ) => {
+  return function(dispatch: AppDispatch) {
 
     dispatch(getIngredientsSucceeded(true))
     dispatch(getIngredientsIsFetching(true))
@@ -46,7 +63,6 @@ export function getIngredients({onSuccess,
         },
       onSuccess: (data: TGetIngredientsResponse) => {
           if (typeof onSuccess === 'function') onSuccess(data)
-          console.log(data)
           dispatch(storeIngredients({
             'Булки': data.data.filter((x) => x.type === 'bun'), 
             'Соусы': data.data.filter((x) => x.type === 'sauce'),

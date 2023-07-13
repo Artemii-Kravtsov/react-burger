@@ -2,8 +2,13 @@ import { GET_INGREDIENTS_IS_FETCHING,
          GET_INGREDIENTS_SUCCESS,
          GET_INGREDIENTS_FAILURE,
          STORE_INGREDIENTS } from '../actions/ingredients'
+import { TAnyAction } from '.'
+import { TStore } from '../../utils/types'
 
-const ingredient = (state, action) => {
+
+const ingredient = (state: TStore['ingredients'], 
+                    action: TAnyAction
+                    ): TStore['ingredients'] => {
 switch (action.type) {
    case STORE_INGREDIENTS:
        return {...state, ingredients: action.ingredients}

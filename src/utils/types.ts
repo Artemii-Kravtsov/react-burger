@@ -1,4 +1,4 @@
-import { useDispatch } from 'react-redux';
+import { StringLiteral } from "typescript";
 
 type Nullable<T> = { [K in keyof T]: T[K] | undefined };
 
@@ -17,11 +17,6 @@ export type THandlers<T> = {
     onSuccess?: (data: T) => void;
     onFinish?: () => void;
 }
-
-export type TActionFunc = (dispatch: ReturnType<typeof useDispatch>) => void
-
-export type TActionFuncWithState = (dispatch: ReturnType<typeof useDispatch>, 
-                                    getState: (...args: any) => TStore) => void
 
 export type TIngredientGroup = 'Булки' | 'Начинки' | 'Соусы'
 
@@ -60,12 +55,42 @@ export type TUserProfile = {
 export type TConstructorItem = TIngredient & {
     onDrop: TBlindFunction;
     id: string;
+    // index: number;
+}
+
+type TBlankItem = {
+    _id: '-1';
+    price: 0;
+    // id?: string;
+}
+
+export type TWSResponse = TResponseSuccess & {
+    orders: TWSAnOrder[];
+    total: number;
+    totalToday: number;
+}
+
+export type TWSAnOrder = {
+    ingredients: string[];
+    _id: string;
+    name: string;
+    status: 'created' | 'pending' | 'done';
+    number: number;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export type WSPrimitives = {
+    wsConnected: boolean;
+    error?: Event;
 }
 
 export type TStore = {
+    browsedOrder: TWSAnOrder | undefined,
     browsedIngredient: TIngredient | undefined;
-    orders: TFetching & {orders: TOrder[]};
+    feed: WSPrimitives & {orders: TWSAnOrder[], total?: number, totalToday?: number};
+    orders: TFetching & WSPrimitives & {lastOrderId: number | undefined, orders: TWSAnOrder[]};
     ingredients: TFetching & {ingredients: Record<TIngredientGroup, TIngredient[]>};
-    constructor: {buns: TConstructorItem | undefined, filling: TConstructorItem[]}
+    constructor: {buns: TConstructorItem | undefined, filling: (TConstructorItem | TBlankItem)[]}
     profile: {loggedIn: boolean} & Nullable<Omit<TUserProfile, 'password'>>;
 }

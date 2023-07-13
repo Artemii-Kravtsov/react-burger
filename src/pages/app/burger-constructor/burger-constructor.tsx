@@ -5,7 +5,7 @@ import PairOfBuns from '../pair-of-buns/pair-of-buns'
 import BurgerFilling from '../burger-filling/burger-filling'
 import { useRef, LegacyRef, FC, ForwardedRef } from 'react';
 import { useDrop } from "react-dnd";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../..';
 import { swapWithBlank,
          addBunsToConstructor,
          addFillingToConstructor, } from '../../../services/actions/constructor';
@@ -16,7 +16,7 @@ import { TStore, TBlindFunction, TConstructorItem } from '../../../utils/types';
 
 const BurgerConstructor: FC = () => {
     const navigate = useNavigate();
-    const dispatch: any = useDispatch()
+    const dispatch = useDispatch()
     function getBuns(store: TStore): [TBlindFunction, number] {
         if (store.constructor.buns && store.constructor.buns._id) {
             return [store.constructor.buns.onDrop, store.constructor.buns.price * 2]

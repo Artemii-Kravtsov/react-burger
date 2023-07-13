@@ -16,7 +16,7 @@ const AppHeader: FC = () => {
   };
   function onOrdersClick() {
     setSelectedScreen('Лента заказов')
-    navigate('/')
+    navigate('/feed')
   };
   function onProfileClick() {
     setSelectedScreen('Личный кабинет')
@@ -26,6 +26,9 @@ const AppHeader: FC = () => {
   useEffect(() => {
     if (location.pathname === '/' && selectedScreen !== 'Конструктор') {
       setSelectedScreen('Конструктор')
+    }
+    if (location.pathname.startsWith('/feed') && selectedScreen !== 'Лента заказов') {
+      setSelectedScreen('Лента заказов')
     }
   }, [location.pathname])
 

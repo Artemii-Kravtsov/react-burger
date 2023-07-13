@@ -1,7 +1,7 @@
 import style from './filling-li.module.css';
 import { useDrag, useDrop } from "react-dnd";
 import { useRef, FC, LegacyRef, RefObject } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../..';
 import { TBlindFunction, TStore } from '../../../utils/types';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { swapConstructorItems, removeItemFromConstructor } from '../../../services/actions/constructor';

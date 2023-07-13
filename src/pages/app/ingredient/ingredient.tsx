@@ -5,7 +5,7 @@ import { DragPreviewImage, useDrag } from "react-dnd";
 import { useStore } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 import { addBrowsedIngredient } from '../../../services/actions/browsed-ingredient';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../..';
 import { TIngredient, TStore } from '../../../utils/types';
 
 
@@ -13,7 +13,7 @@ type TIngredientComponent = {
     data: TIngredient;
 }
 const Ingredient: FC<TIngredientComponent> = ({ data }) => {
-    const dispatch: any = useDispatch()
+    const dispatch = useDispatch()
     const [count, setCount] = useState<number>(0)
     const store = useStore<TStore>()
     const navigate = useNavigate();
