@@ -23,7 +23,7 @@
 Запустить локально можно так:
 ```
 > git clone https://github.com/Artemii-Kravtsov/react-burger.git
-> cd react-burger-app
+> cd react-burger
 > npm install
 > npm start
 ```
