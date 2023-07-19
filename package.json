@@ -30,7 +30,8 @@
     "eject": "react-scripts eject",
     "cypress:open": "./node_modules/.bin/cypress open",
     "predeploy": "npm run build",
-    "deploy": "npm run build && scp -r ./build/* timosha@51.250.11.165:/home/timosha/stellar-frontend"
+    "deploy": "npm run build && scp -r ./build/* timosha@51.250.11.165:/home/timosha/stellar-frontend",
+    "deploy:praktikum": "npm run build && scp -r ./build/* praktikum@51.250.11.165:/home/praktikum/stellar-frontend"
   },
   "eslintConfig": {
     "extends": [

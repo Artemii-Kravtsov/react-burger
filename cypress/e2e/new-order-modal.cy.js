@@ -5,10 +5,11 @@ import { getIngredient, moveToConstructor } from "../support/utils"
 describe('оформление заказа', function() {
     const button = '#root main section:nth-child(2) button'
     const constructorArea = '#root main section:nth-child(2) > ul'
+    const baseUrl = Cypress.config('baseUrl')
 
 
     beforeEach(function() {
-      cy.visit('http://localhost:3000');
+      cy.visit('/');
       cy.viewport(1000, 1000)
     });
 
@@ -20,7 +21,7 @@ describe('оформление заказа', function() {
 
       moveToConstructor('@bun', constructorArea)
       cy.get(button).should('be.disabled')
-      cy.url().should('eq', 'http://localhost:3000/')
+      cy.url().should('eq', baseUrl)
 
       getIngredient(2, 2).as('sause')
       moveToConstructor('@sause', constructorArea)
@@ -37,7 +38,7 @@ describe('оформление заказа', function() {
       moveToConstructor('@sause', constructorArea)
 
       cy.get(button).click()
-      cy.url().should('eq', 'http://localhost:3000/login')
+      cy.url().should('eq', baseUrl + 'login')
 
     });
 
@@ -50,21 +51,21 @@ describe('оформление заказа', function() {
       moveToConstructor('@sause', constructorArea)
 
       cy.get(button).click()
-      cy.url().should('eq', 'http://localhost:3000/login')
+      cy.url().should('eq', baseUrl + 'login')
       cy.contains('Вход')
 
       cy.get('input[name="email"]').type('temati9797@yandex.ru')
       cy.get('input[name="password"]').type('zvezdo4ka')
       cy.get('button').should('not.be.disabled').click()
 
-      cy.url().should('eq', 'http://localhost:3000/profile/orders')
+      cy.url().should('eq', baseUrl + 'profile/orders')
       cy.get('#react-modals').contains('Формируем заказ')
 
       cy.get('#react-modals h3', {timeout: 20000}).as('orderId')
       cy.get('@orderId').should('include', /^\d{1,6}$/)
       cy.get('#react-modals').contains('Ваш заказ начали готовить')
       cy.get('#react-modals main h2 svg').click()
-      cy.url().should('eq', 'http://localhost:3000/')
+      cy.url().should('eq', baseUrl)
 
     });
 

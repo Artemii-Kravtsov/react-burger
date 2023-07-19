@@ -4,9 +4,10 @@ import { getIngredient, moveToConstructor } from "../support/utils"
 describe('конструктор', function() {
   const constructorArea = '#root main section:nth-child(2) > ul'
   const bunsNames = '#root main section:nth-child(2) > div span.constructor-element__text'
+  const counterDiv = 'div.counter'
 
   beforeEach(function() {
-    cy.visit('http://localhost:3000')
+    cy.visit('/')
     cy.viewport(1000, 1000)
   });
 
@@ -17,8 +18,8 @@ describe('конструктор', function() {
     moveToConstructor('@bun_tmp', constructorArea)
     moveToConstructor('@bun', constructorArea)
 
-    cy.get('@bun_tmp').find('div.counter').should('not.exist')
-    cy.get('@bun').find('div.counter').should('contain', '2')
+    cy.get('@bun_tmp').find(counterDiv).should('not.exist')
+    cy.get('@bun').find(counterDiv).should('contain', '2')
     
     cy.get('@bun')
       .find('> p.text')
@@ -51,9 +52,9 @@ describe('конструктор', function() {
         cy.wrap(x).should('have.length', 3)
       })
 
-    cy.get('@sause').find('div.counter').should('contain', '2')
-    cy.get('@filling').find('div.counter').should('contain', '1')
-    cy.get('@filling_tmp').find('div.counter').should('not.exist')
+    cy.get('@sause').find(counterDiv).should('contain', '2')
+    cy.get('@filling').find(counterDiv).should('contain', '1')
+    cy.get('@filling_tmp').find(counterDiv).should('not.exist')
   });
 
 
@@ -69,8 +70,8 @@ describe('конструктор', function() {
 
     cy.get(constructorArea).find('> li').should('have.length', 1)
     cy.get(bunsNames).each((x) => cy.wrap(x).should('contain', 'Перетащите булки'))
-    cy.get('@sause').find('div.counter').should('not.exist')
-    cy.get('@bun').find('div.counter').should('not.exist')
+    cy.get('@sause').find(counterDiv).should('not.exist')
+    cy.get('@bun').find(counterDiv).should('not.exist')
 
   });  
 

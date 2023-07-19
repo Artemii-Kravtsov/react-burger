@@ -1,7 +1,8 @@
 describe('модальные окна с описанием ингредиента', function() {
+    const baseUrl = Cypress.config('baseUrl')
   
     beforeEach(function() {
-      cy.visit('http://localhost:3000');
+      cy.visit('/');
       cy.viewport(1000, 1000)
     });
 
@@ -10,7 +11,7 @@ describe('модальные окна с описанием ингредиент
       cy.url().should('include', 'ingredients')
       cy.contains('Детали ингредиента');
       cy.get('#react-modals main h2 svg').click()
-      cy.url().should('eq', 'http://localhost:3000/')
+      cy.url().should('eq', baseUrl)
     });
   
     it('содержат верную информацию', function() {
