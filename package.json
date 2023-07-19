@@ -30,7 +30,7 @@
     "eject": "react-scripts eject",
     "cypress:open": "./node_modules/.bin/cypress open",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "npm run build && scp -r ./build/* timosha@51.250.11.165:/home/timosha/stellar-frontend"
   },
   "eslintConfig": {
     "extends": [
@@ -58,6 +58,7 @@
     "@types/react-dom": "^18.2.6",
     "@types/uuid": "^9.0.2",
     "cypress": "^12.17.1",
+    "eslint-plugin-cypress": "^2.13.3",
     "fetch-mock": "^9.11.0",
     "gh-pages": "^5.0.0",
     "react-test-renderer": "^18.2.0",
