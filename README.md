@@ -20,7 +20,7 @@
 
 
 ## Git
-Скачать и запустить можно при помощи следующей последовательности команд:
+Запустить локально можно так:
 ```
 > git clone https://github.com/Artemii-Kravtsov/react-burger.git
 > cd react-burger-app
