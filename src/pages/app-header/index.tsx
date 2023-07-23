@@ -48,7 +48,8 @@ const AppHeader: FC = () => {
               currentSelection={selectedScreen} />
       </nav>
 
-      <span className={`${style.logoContainer} pb-4  pt-4`}>
+      <span className={`${style.logoContainer} pb-4  pt-4`}
+            onClick={onConstructorClick}>
         <Logo/>
       </span>
 

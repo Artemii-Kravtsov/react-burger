@@ -14,7 +14,7 @@ import { TWSFeedActions } from '../actions/ws-feed';
 import { TWSOrdersActions } from '../actions/ws-orders';
 
 
-const initialState: TStore = {
+export const initialState: TStore = {
     'browsedIngredient': undefined,                 // объект текущего просматриваемого ингредиента
     'browsedOrder': undefined,                      // объект текущего просматриваемого заказа
     'feed': {wsConnected: false,                    // лента заказов

@@ -15,10 +15,9 @@ const BurgerIngredients: FC = () => {
                       useRef<HTMLHeadingElement>()]
   const [selectedTab, setSelectedTab] = useState<TIngredientGroup>('Булки')
   const areaStart = useRef<HTMLElement>()
-  const areaStartCoords = useMemo(() => areaStart.current && areaStart.current.getBoundingClientRect().bottom, 
-                                  [areaStart.current])
 
   const handleScroll = (): void => {
+    const areaStartCoords = areaStart.current && areaStart.current.getBoundingClientRect().bottom
     if (headerRefs.some((x) => !x) || !areaStartCoords) {return}
     const dist = headerRefs.map(x => x.current!.getBoundingClientRect().top - areaStartCoords).map(x => Math.abs(x))
     const newSelectedTab = headerNames[dist.indexOf(Math.min(...dist))]
